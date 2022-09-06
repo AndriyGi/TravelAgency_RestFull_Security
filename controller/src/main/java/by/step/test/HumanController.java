@@ -6,7 +6,7 @@ import by.step.test.service.AbstractHumanService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/step")
+@RequestMapping("/humans")
 public class HumanController {
 //    private AbstractHumanService abstractHumanService;
 //
