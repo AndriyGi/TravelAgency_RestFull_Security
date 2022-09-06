@@ -5,8 +5,7 @@ import java.util.List;
 public interface AbstructPhoneBookRepository {
 
     List<PhoneBook> getPhoneBookList();
-    List<PhoneBook> createPhoneBook();
-
+    PhoneBook createPhoneBook();
     List<PhoneBook> getNumber();
 
 

@@ -16,8 +16,7 @@ public class PhoneBookService implements AbstructPhoneBookService {
 
     @Override
     public String getPhoneBook() {
-        return phoneBookRepository.getPhoneBookList().stream()
-                .filter(phoneBook -> phoneBookRepository.getPhoneBookList().)
+        return null;
     }
 
     @Override

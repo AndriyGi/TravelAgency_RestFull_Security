@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/step")
 public class HumanController {
-    private AbstractHumanService abstractHumanService;
-
-    public HumanController(AbstractHumanService abstractHumanService) {
-        this.abstractHumanService = abstractHumanService;
-    }
+//    private AbstractHumanService abstractHumanService;
+//
+//    public HumanController(AbstractHumanService abstractHumanService) {
+//        this.abstractHumanService = abstractHumanService;
+//    }
 
     @GetMapping
     String name (@RequestParam String name){
@@ -23,8 +23,8 @@ public class HumanController {
     String nameVar (@PathVariable String name){
         return name + " Pupkin";
     }
-    @GetMapping("/humans/human")
-    Human getHuman (){
-        return abstractHumanService.getHumanObject();
-    }
+//    @GetMapping("/humans/human")
+//    Human getHuman (){
+//        return abstractHumanService.getHumanObject();
+//    }
 }
