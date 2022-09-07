@@ -2,29 +2,27 @@ package by.step.test;
 
 
 import by.step.test.dao.entity.Human;
-import by.step.test.service.AbstractHumanService;
+import by.step.test.service.impl.HumanService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/humans")
 public class HumanController {
-//    private AbstractHumanService abstractHumanService;
-//
-//    public HumanController(AbstractHumanService abstractHumanService) {
-//        this.abstractHumanService = abstractHumanService;
-//    }
+
+    @Autowired
+    private HumanService humanService;
+
+    @PostMapping
+    public Human save(@RequestBody Human human){
+        return  humanService.save(human);
+    }
 
     @GetMapping
-    String name (@RequestParam String name){
-        return name + " Pupkin";
+    public List<Human> findAll() {
+        return humanService.findAll();
     }
 
-    @GetMapping("/{name}")
-    String nameVar (@PathVariable String name){
-        return name + " Pupkin";
-    }
-//    @GetMapping("/humans/human")
-//    Human getHuman (){
-//        return abstractHumanService.getHumanObject();
-//    }
 }

@@ -5,7 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface AbstractHumanRepository {
+public interface IHumanRepository {
 
-    List<Human> getHumanList();
+    List<Human> findAll();
+    Human save(Human human);
 }
