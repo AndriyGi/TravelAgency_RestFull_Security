@@ -7,10 +7,14 @@ import java.util.List;
 
 public interface IVaucherService {
 
-    List <Vaucher > findAllVauchers();
+    List<Vaucher> findAllVauchers();
+
     Vaucher saveNewVaucher(Vaucher vaucher);
 
+//    Vaucher getAllVauchers(List<Vaucher> vaucher);
+
     List<VaucherType> findAllVaucherTypes();
+
     VaucherType saveNewVaucherType(VaucherType vaucherType);
 
 }

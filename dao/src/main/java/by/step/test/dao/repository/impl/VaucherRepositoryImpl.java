@@ -3,25 +3,32 @@ package by.step.test.dao.repository.impl;
 import by.step.test.dao.entity.Vaucher;
 import by.step.test.dao.entity.VaucherType;
 import by.step.test.dao.repository.IVaucherRepository;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
+
+@NoArgsConstructor
 @Repository
 public class VaucherRepositoryImpl implements IVaucherRepository {
 
+
     private List<Vaucher> vaucherList;
-    private List<VaucherType> vaucherTypes;
+    private List<VaucherType> vaucherTypesList;
+    private Vaucher vaucher;
 
-    public VaucherRepositoryImpl(List<VaucherType> vaucherTypes) {
-        this.vaucherTypes = vaucherTypes;
+    public VaucherRepositoryImpl(Vaucher vaucher) {
+        this.vaucher = vaucher;
     }
 
-    public VaucherRepositoryImpl() {
-        vaucherList = new ArrayList<>();
+    public VaucherRepositoryImpl(List<Vaucher> vaucherList, List<VaucherType> vaucherTypesList, Vaucher vaucher) {
+        this.vaucherList = vaucherList;
+        this.vaucherTypesList = vaucherTypesList;
+        this.vaucher = vaucher;
+        vaucherList.add(new Vaucher("SPORT", 1200, 21));
     }
-
 
     @Override
     public List<Vaucher> findAllVauchers() {
@@ -41,12 +48,12 @@ public class VaucherRepositoryImpl implements IVaucherRepository {
 
     @Override
     public List<VaucherType> findAllVauchersByTupe() {
-        return vaucherTypes;
+        return vaucherTypesList;
     }
 
     @Override
     public VaucherType saveNewVaucherType(VaucherType vaucherType) {
-        boolean val = vaucherTypes.add(vaucherType);
+        boolean val = vaucherTypesList.add(vaucherType);
         if (val == true) {
             return vaucherType;
         } else {

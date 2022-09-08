@@ -15,13 +15,34 @@ public class VoucherController {
     @Autowired
     private VaucherServiceImpl vaucherService;
 
-    @PostMapping
-    public Vaucher save(@RequestBody Vaucher vaucher){
+    @PostMapping("/save")
+    public Vaucher save(@RequestBody Vaucher vaucher) {
         return vaucherService.saveNewVaucher(vaucher);
     }
 
     @GetMapping
-    public List<Vaucher> findAll(){
-        return vaucherService.findAllVauchers();
+    public List<Vaucher> getAllVauchers(){
+        return  vaucherService.findAllVauchers();
     }
+
+//    @GetMapping("/voucher")
+//    public Vaucher getAllVauchers() {
+//        return vaucherService.findAllVauchers();
+//    }
+
+
+//    @GetMapping
+//    public List<VaucherType> findAllVauchersTypes(){
+//        return vaucherService.findAllVaucherTypes();
+//    }
+//
+
+
+//
+//    @GetMapping
+//    public List<Vaucher> findAllVauchers(){
+//        return vaucherService.findAllVauchers();
+//    }
+
+
 }
