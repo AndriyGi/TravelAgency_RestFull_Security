@@ -17,8 +17,10 @@ public interface IVaucherService {
 
     VaucherType saveNewVaucherType(VaucherType vaucherType);
 
-    Vaucher findVaucher(VaucherType type, int price, int days);
+    Vaucher buildVaucher(VaucherType type, int price, int days);
 
     void vaucherSortPrice();
+
+    void vaucherSortDays();
 
 }

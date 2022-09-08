@@ -28,6 +28,8 @@ public class VaucherServiceImpl implements IVaucherService {
     @Override
     public List<Vaucher> findAllVauchers() {
         return vaucherRepository.findAllVauchers();
+
+        // to do - add vauchers
     }
 
     @Override
@@ -56,7 +58,7 @@ public class VaucherServiceImpl implements IVaucherService {
     }
 
     @Override
-    public Vaucher findVaucher(VaucherType type, int price, int days) {
+    public Vaucher buildVaucher(VaucherType type, int price, int days) {
         Vaucher vaucherResult = vaucherRepository.findAllVauchers().stream()
                 .filter(vaucherType -> vaucherType.getVaucherType().equals(type))
                 .filter(vaucherPrice -> vaucherPrice.getPrice() == price)
@@ -69,4 +71,11 @@ public class VaucherServiceImpl implements IVaucherService {
     public void vaucherSortPrice() {
         vaucherRepository.findAllVauchers().sort(Comparator.comparing(Vaucher::getPrice));
     }
+
+    @Override
+    public void vaucherSortDays() {
+        vaucherRepository.findAllVauchers().sort(Comparator.comparing(Vaucher::getDays));
+    }
+
+
 }
