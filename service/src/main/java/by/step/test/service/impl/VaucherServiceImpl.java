@@ -7,7 +7,9 @@ import by.step.test.service.IVaucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VaucherServiceImpl implements IVaucherService {
@@ -51,5 +53,20 @@ public class VaucherServiceImpl implements IVaucherService {
     @Override
     public VaucherType saveNewVaucherType(VaucherType vaucherType) {
         return vaucherRepository.saveNewVaucherType(vaucherType);
+    }
+
+    @Override
+    public Vaucher findVaucher(VaucherType type, int price, int days) {
+        Vaucher vaucherResult = vaucherRepository.findAllVauchers().stream()
+                .filter(vaucherType -> vaucherType.getVaucherType().equals(type))
+                .filter(vaucherPrice -> vaucherPrice.getPrice() == price)
+                .filter(vaucherDays -> vaucherDays.getDays() == days)
+                .findAny().orElseThrow(RuntimeException::new);
+        return vaucherResult;
+    }
+
+    @Override
+    public void vaucherSortPrice() {
+        vaucherRepository.findAllVauchers().sort(Comparator.comparing(Vaucher::getPrice));
     }
 }

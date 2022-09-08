@@ -15,7 +15,11 @@ public class HumanRepositoryImpl implements IHumanRepository {
 
     public HumanRepositoryImpl() {
         this.humanList = new ArrayList<>();
+        humanList.add(new Human("IVAN", "Petron"));
     }
+
+
+
 
     @Override
     public List<Human> findAll() {
@@ -24,11 +28,16 @@ public class HumanRepositoryImpl implements IHumanRepository {
 
     @Override
     public Human save(Human human) {
-        boolean value =  humanList.add(human);
-        if(value == true){
-            return  human;
-        } else {
-            return  null;
+        humanList.add(human);
+        return  human;
+    }
+
+    @Override
+    public Human delete(Human human) {
+        boolean val = humanList.remove(human);
+        if(val=true){
+            return human;
         }
+        return null;
     }
 }

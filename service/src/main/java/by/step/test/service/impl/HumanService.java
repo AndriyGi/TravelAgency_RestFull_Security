@@ -24,4 +24,9 @@ public class HumanService implements IHumanService {
     public Human save(Human human) {
         return humanRepository.save(human);
     }
+
+    @Override
+    public Human delite(Human human) {
+        return humanRepository.delete(human);
+    }
 }

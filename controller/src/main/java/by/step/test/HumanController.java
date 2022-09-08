@@ -40,4 +40,8 @@ public class HumanController {
         return humanService.findAll();
     }
 
+    @GetMapping("deliteHuman")
+    public Human delite(@RequestBody Human human){
+        return humanService.delite(human);
+    }
 }

@@ -1,7 +1,6 @@
 package by.step.test;
 
 import by.step.test.dao.entity.Vaucher;
-import by.step.test.dao.entity.VaucherType;
 import by.step.test.service.impl.VaucherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +19,14 @@ public class VoucherController {
         return vaucherService.saveNewVaucher(vaucher);
     }
 
-    @GetMapping
-    public List<Vaucher> getAllVauchers(){
-        return  vaucherService.findAllVauchers();
-    }
+//    @GetMapping
+//    public List<Vaucher> getAllVauchers(){
+//        return  vaucherService.findAllVauchers();
+//    }
 
 //    @GetMapping("/voucher")
-//    public Vaucher getAllVauchers() {
-//        return vaucherService.findAllVauchers();
+//    public List<Vaucher> getAllVauchers() {
+//        return v;
 //    }
 
 
