@@ -18,17 +18,9 @@ public class VaucherServiceImpl implements IVaucherService {
     @Autowired
     private IVaucherRepository vaucherRepository;
 
-//
-//    @Override
-//    public List<Vaucher> findAllVauchers() {
-//        return findAllVauchers();
-//    }
-
-
     @Override
     public List<Vaucher> findAllVauchers() {
         return vaucherRepository.findAllVauchers();
-
         // to do - add vauchers
     }
 
@@ -37,15 +29,10 @@ public class VaucherServiceImpl implements IVaucherService {
         return vaucherRepository.saveNewVaucher(vaucher);
     }
 
-//    @Override
-//    public Vaucher getAllVauchers(List<Vaucher> vaucher) {
-//        return vaucherRepository.findAllVauchers();
-//    }
-
-//    @Override
-//    public Vaucher getAllVauchers(Vaucher vaucher) {
-//        return vaucherRepository.findAllVauchers();
-//    }
+    @Override
+    public Vaucher deleteVaucher(Vaucher vaucher){
+        return vaucherRepository.deleteVaucher(vaucher);
+    }
 
     @Override
     public List<VaucherType> findAllVaucherTypes() {
@@ -75,6 +62,11 @@ public class VaucherServiceImpl implements IVaucherService {
     @Override
     public void vaucherSortDays() {
         vaucherRepository.findAllVauchers().sort(Comparator.comparing(Vaucher::getDays));
+    }
+
+    @Override
+    public void vaucherSortType() {
+        vaucherRepository.findAllVauchers().sort(Comparator.comparing(Vaucher::getVaucherType));
     }
 
 

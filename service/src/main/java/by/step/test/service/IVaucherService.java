@@ -11,16 +11,22 @@ public interface IVaucherService {
 
     Vaucher saveNewVaucher(Vaucher vaucher);
 
+    Vaucher deleteVaucher(Vaucher vaucher);
+
 //    Vaucher getAllVauchers(List<Vaucher> vaucher);
 
     List<VaucherType> findAllVaucherTypes();
 
     VaucherType saveNewVaucherType(VaucherType vaucherType);
 
+
+
     Vaucher buildVaucher(VaucherType type, int price, int days);
 
     void vaucherSortPrice();
 
     void vaucherSortDays();
+
+    void vaucherSortType();
 
 }

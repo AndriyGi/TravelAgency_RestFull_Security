@@ -11,6 +11,8 @@ public interface IVaucherRepository {
 
     Vaucher saveNewVaucher(Vaucher vaucher);
 
+    Vaucher deleteVaucher(Vaucher vaucher);
+
     List<VaucherType> findAllVauchersByTupe();
 
     VaucherType saveNewVaucherType(VaucherType vaucherType);

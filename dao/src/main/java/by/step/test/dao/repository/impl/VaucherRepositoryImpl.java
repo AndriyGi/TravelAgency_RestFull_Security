@@ -44,6 +44,15 @@ public class VaucherRepositoryImpl implements IVaucherRepository {
     }
 
     @Override
+    public Vaucher deleteVaucher(Vaucher vaucher) {
+        boolean val = vaucherList.remove(vaucher);
+        if(val == true){
+            return vaucher;
+        }
+        return null;
+    }
+
+    @Override
     public List<VaucherType> findAllVauchersByTupe() {
         return null;
     }
