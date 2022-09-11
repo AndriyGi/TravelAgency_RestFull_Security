@@ -23,8 +23,6 @@ public class HumanController {
         this.humanService = humanService;
     }
 
-
-
     @Autowired
     private HumanService humanService;
 
@@ -40,8 +38,8 @@ public class HumanController {
         return humanService.findAll();
     }
 
-    @GetMapping("deliteHuman")
-    public Human delite(@RequestBody Human human){
-        return humanService.delite(human);
+    @DeleteMapping("/{humanId}")
+    public void delite(@PathVariable ("humanId") Long id){
+        humanService.delete(id);
     }
 }

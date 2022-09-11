@@ -1,15 +1,24 @@
 package by.step.test.dao.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import java.io.Serializable;
+import javax.persistence.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Human implements Serializable {
+@Table
+@Entity
+@Getter
+@Setter
+public class Human {
+
+    public Human() {
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long ID;
     private String name;
     private String surname;
+
+
 }

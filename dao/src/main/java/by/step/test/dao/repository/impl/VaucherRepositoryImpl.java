@@ -36,11 +36,7 @@ public class VaucherRepositoryImpl implements IVaucherRepository {
     @Override
     public Vaucher saveNewVaucher(Vaucher vaucher) {
         boolean val = vaucherList.add(vaucher);
-        if (val == true) {
-            return vaucher;
-        } else {
-            return null;
-        }
+        return vaucher;
     }
 
     @Override

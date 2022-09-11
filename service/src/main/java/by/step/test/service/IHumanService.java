@@ -8,7 +8,7 @@ public interface IHumanService {
 
     List<Human> findAll();
     Human save(Human human);
-    Human delite(Human human);
+    void delete(Long id);
 
 
 

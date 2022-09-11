@@ -6,11 +6,13 @@ import by.step.test.service.IHumanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.*;
 import java.util.List;
 
 
 @Service
 public class HumanService implements IHumanService {
+
 
     @Autowired
     private IHumanRepository humanRepository;
@@ -26,7 +28,7 @@ public class HumanService implements IHumanService {
     }
 
     @Override
-    public Human delite(Human human) {
-        return humanRepository.delete(human);
+    public void delete(Long id) {
+         humanRepository.deleteById(id);
     }
 }

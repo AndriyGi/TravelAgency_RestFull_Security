@@ -1,6 +1,7 @@
 package by.step.test;
 
 import by.step.test.dao.entity.Vaucher;
+import by.step.test.service.IVaucherService;
 import by.step.test.service.impl.VaucherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,16 @@ import org.springframework.web.bind.annotation.*;
 public class VoucherController {
 
     @Autowired
-    private VaucherServiceImpl vaucherService;
+    private IVaucherService vaucherService;
 
     @PostMapping("/save")
     public Vaucher save(@RequestBody Vaucher vaucher) {
         return vaucherService.saveNewVaucher(vaucher);
+    }
+
+    @DeleteMapping("/delete")
+    public Vaucher delete(@RequestBody Vaucher vaucher){
+        return vaucherService.deleteVaucher(vaucher);
     }
 
 //    @GetMapping
