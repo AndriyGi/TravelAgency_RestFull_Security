@@ -9,7 +9,7 @@ public interface IHumanService {
     List<Human> findAll();
     Human save(Human human);
     void delete(Long id);
+    List<Human> findAllByName(String name);
 
-
-
+    List<Human> findAllBySurnameAndAge(String surname, Integer age);
 }

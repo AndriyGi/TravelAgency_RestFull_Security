@@ -20,7 +20,7 @@ public class HumanController {
 
     public HumanController(IHumanService iHumanService, HumanService humanService) {
         this.iHumanService = iHumanService;
-        this.humanService = humanService;
+//        this.humanService = humanService;
     }
 
     @Autowired
@@ -42,4 +42,16 @@ public class HumanController {
     public void delite(@PathVariable ("humanId") Long id){
         humanService.delete(id);
     }
+
+    @GetMapping("/filter")
+    public List<Human> findAllByName(@RequestParam ("name")String name){
+        return  humanService.findAllByName(name);
+    }
+
+    @GetMapping("/surnameage")
+    @Operation(summary = "пнайти по имени и возрасту" ,description = "ВСЕ по возрасту и фамилии")
+    public List<Human> findAllBySurnameAndAge(@RequestParam String surname, @RequestParam Integer age){
+        return humanService.findAllBySurnameAndAge(surname, age);
+    }
+
 }

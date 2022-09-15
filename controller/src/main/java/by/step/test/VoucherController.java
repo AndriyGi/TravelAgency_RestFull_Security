@@ -1,15 +1,19 @@
 package by.step.test;
 
 import by.step.test.dao.entity.Vaucher;
+import by.step.test.dao.entity.VaucherType;
+import by.step.test.exception.ServiceException;
 import by.step.test.service.IVaucherService;
-import by.step.test.service.impl.VaucherServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController
 @RequestMapping("/vouchers")
+@Tag(name="Путевки", description = "для работы с путевками")
 public class VoucherController {
 
     @Autowired
@@ -25,29 +29,34 @@ public class VoucherController {
         return vaucherService.deleteVaucher(vaucher);
     }
 
-//    @GetMapping
-//    public List<Vaucher> getAllVauchers(){
-//        return  vaucherService.findAllVauchers();
-//    }
+    @GetMapping("/calcvaucherprice")
+    public double calculateVaucherPrice(Vaucher vaucher) {
+        return vaucher.getPriceOneDay() * vaucher.getDays();
+    }
+    @GetMapping("/allvauchers")
+    public List<Vaucher> getAllVauchers(){
+        return  vaucherService.findAllVauchers();
+    }
 
-//    @GetMapping("/voucher")
-//    public List<Vaucher> getAllVauchers() {
-//        return v;
-//    }
-
-
-//    @GetMapping
-//    public List<VaucherType> findAllVauchersTypes(){
-//        return vaucherService.findAllVaucherTypes();
-//    }
-//
-
-
-//
-//    @GetMapping
-//    public List<Vaucher> findAllVauchers(){
-//        return vaucherService.findAllVauchers();
-//    }
+    @GetMapping("/findbyid")
+    public Vaucher findById(Long id) {
+        Vaucher vaucher = new Vaucher();
+        try {
+             vaucher = vaucherService.findById(id);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return vaucher;
+    }
+ @GetMapping("/buildvaucher")
+    public Vaucher buildVaucher(VaucherType type, int price, int days) {
+        Vaucher vaucherResult = vaucherService.findAllVauchers().stream()
+                .filter(vaucherType -> vaucherType.getVaucherType().equals(type))
+                .filter(vaucherPrice -> vaucherPrice.getPriceOneDay() == price)
+                .filter(vaucherDays -> vaucherDays.getDays() == days)
+                .findAny().orElseThrow(RuntimeException::new);
+        return vaucherResult;
+    }
 
 
 }

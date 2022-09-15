@@ -19,6 +19,7 @@ public class Human {
     private Long ID;
     private String name;
     private String surname;
+    private Integer age;
 
 
 }

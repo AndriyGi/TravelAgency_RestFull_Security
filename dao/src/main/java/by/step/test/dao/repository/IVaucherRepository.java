@@ -1,20 +1,26 @@
 package by.step.test.dao.repository;
 
+import by.step.test.dao.entity.Human;
 import by.step.test.dao.entity.Vaucher;
 import by.step.test.dao.entity.VaucherType;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface IVaucherRepository {
+public interface IVaucherRepository extends JpaRepository<Vaucher, Long> {
 
-    List<Vaucher> findAllVauchers();
+//    List<Vaucher> findAllVauchers();
 
-    Vaucher saveNewVaucher(Vaucher vaucher);
+//    Vaucher findById(Long id);
 
-    Vaucher deleteVaucher(Vaucher vaucher);
 
-    List<VaucherType> findAllVauchersByTupe();
+//    Vaucher saveNewVaucher(Vaucher vaucher);
+//
+//    Vaucher deleteVaucher(Vaucher vaucher);
 
-    VaucherType saveNewVaucherType(VaucherType vaucherType);
+//    List<VaucherType> findAllVauchersByVaucherType();
+//
+//    VaucherType saveNewVaucherType(VaucherType vaucherType);
+//
 
 }

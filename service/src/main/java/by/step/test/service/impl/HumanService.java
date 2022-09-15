@@ -14,6 +14,7 @@ import java.util.List;
 public class HumanService implements IHumanService {
 
 
+
     @Autowired
     private IHumanRepository humanRepository;
 
@@ -29,6 +30,16 @@ public class HumanService implements IHumanService {
 
     @Override
     public void delete(Long id) {
-         humanRepository.deleteById(id);
+        humanRepository.deleteById(id);
+    }
+
+    public List<Human> findAllByName(String name) {
+        List<Human> allHumansByName = humanRepository.findAllByName(name);
+        return allHumansByName;
+    }
+
+    @Override
+    public List<Human> findAllBySurnameAndAge(String surname, Integer age) {
+        return humanRepository.findAllBySurnameAndAge(surname, age);
     }
 }
