@@ -15,7 +15,6 @@ import java.util.Optional;
 @Service
 public class VaucherServiceImpl implements IVaucherService {
 
-
     @Autowired
     private IVaucherRepository vaucherRepository;
     private Vaucher vaucher;
@@ -29,7 +28,7 @@ public class VaucherServiceImpl implements IVaucherService {
     @Override
     public Vaucher findById(Long id) throws ServiceException {
         Optional<Vaucher> vaucherOptional = vaucherRepository.findById(id);
-        if(vaucherOptional.isPresent()){
+        if (vaucherOptional.isPresent()) {
             return vaucherOptional.get();
         } else {
 //            System.out.println("объект по ID не найден");
@@ -49,18 +48,22 @@ public class VaucherServiceImpl implements IVaucherService {
         return vaucher;
     }
 
-    @Override
-    public List<VaucherType> findAllVaucherTypes() {
-//        return vaucherRepository
-//                .findAllVauchersByVaucherType();
-        return  null;
-    }
-
-    @Override
-    public VaucherType saveNewVaucherType(VaucherType vaucherType) {
+//
+//    @Override
+//    public Object findAllByVaucherType(VaucherType vaucherType) throws ServiceException {
+//        Optional<VaucherType> vaucherOptional = vaucherRepository.findAllByVaucherType(vaucherType);
+//        if (vaucherOptional.isPresent()) {
+//            return vaucherOptional.get();
+//        } else {
+//            throw new ServiceException("объект по ID не найден");
+//        }
+//    }
+//
+//    @Override
+//    public VaucherType saveNewVaucherType(VaucherType vaucherType) {
 //        return vaucherRepository.saveNewVaucherType(vaucherType);
-        return  null;
-    }
+//    }
+//
 
     @Override
     public Vaucher buildVaucher(VaucherType type, int price, int days) {
@@ -69,12 +72,16 @@ public class VaucherServiceImpl implements IVaucherService {
                 .filter(vaucherPrice -> vaucherPrice.getPriceOneDay() == price)
                 .filter(vaucherDays -> vaucherDays.getDays() == days)
                 .findAny().orElseThrow(RuntimeException::new);
+//        double calculatedVaucherPrice = calculateVaucherPrice(vaucherResult);
+
         return vaucherResult;
     }
 
     public double calculateVaucherPrice(Vaucher vaucher) {
         return vaucher.getPriceOneDay() * vaucher.getDays();
+
     }
+
 
     @Override
     public void vaucherSortPrice() {

@@ -12,4 +12,12 @@ public interface IHumanService {
     List<Human> findAllByName(String name);
 
     List<Human> findAllBySurnameAndAge(String surname, Integer age);
+
+//    Human attachVaucherToHuman(Long humanId, Long vaucherId);
+
+
+    Human attachVauchersToHuman(Long humanId, Long vaucherId);
+
+
+
 }

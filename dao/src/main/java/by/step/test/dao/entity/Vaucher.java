@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -35,14 +37,12 @@ public class Vaucher {
     private VaucherType vaucherType;
 
     private Double priceOneDay;
-//    private Double priceFull;
     private Integer days;
 
-//    @ManyToOne
-//    @JoinColumn()
-//    private Human owner;
+//    private Double priceFull;
 
-    // TODO:  add any fields;
+
+
 
 
 }

@@ -20,11 +20,13 @@ public interface IVaucherService {
     void vaucherSortDays();
     void vaucherSortType();
 
-    List<VaucherType> findAllVaucherTypes();
-    VaucherType saveNewVaucherType(VaucherType vaucherType);
+
+//    VaucherType saveNewVaucherType(VaucherType vaucherType);
+//    Object findAllByVaucherType(VaucherType vaucherType) throws ServiceException;
+
 
 //    Vaucher getAllVauchers(List<Vaucher> vaucher);
-
+//    List<VaucherType> findAllVaucherTypes();
 
 
 

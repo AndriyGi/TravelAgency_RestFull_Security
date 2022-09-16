@@ -14,6 +14,7 @@ public interface IHumanRepository extends JpaRepository<Human, Long> {
 
 
 
+
 //    List<Human> findAll();
 //    Human save(Human human);
 //    Human delete(Human human);

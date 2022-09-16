@@ -10,7 +10,6 @@ public class AppConfig {
 
 
 //    @Bean
-//    IHumanRepository humanRepository (){
-//        return new HumanRepositoryImpl();
+//    IHumanRepository humanRepository (){ return new HumanRepositoryImpl();
 //    }
 }
