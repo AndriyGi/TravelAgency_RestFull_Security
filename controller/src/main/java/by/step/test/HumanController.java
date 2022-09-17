@@ -38,6 +38,12 @@ public class HumanController {
         return humanService.findAll();
     }
 
+//        @GetMapping
+//    @Operation(summary = "Найти всех людей", description = "All clients of Agency")
+//    public List<Human> findAll() {
+//        return humanService.;
+//    }
+
     @DeleteMapping("/{humanId}")
     public void delite(@PathVariable("humanId") Long id) {
         humanService.delete(id);

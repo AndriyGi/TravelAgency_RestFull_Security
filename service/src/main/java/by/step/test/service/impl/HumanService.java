@@ -22,8 +22,11 @@ public class HumanService implements IHumanService {
     private IHumanRepository humanRepository;
 
     @Override
+//    public List<Human> findAll() {
+//        return humanRepository.findAll();
+//    }
     public List<Human> findAll() {
-        return humanRepository.findAll();
+        return humanRepository.findAllHumans();
     }
 
     @Override
