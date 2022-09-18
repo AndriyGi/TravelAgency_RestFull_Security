@@ -4,7 +4,6 @@ package by.step.test;
 import by.step.test.dao.entity.Human;
 import by.step.test.dto.HumanDto;
 import by.step.test.service.IHumanService;
-import by.step.test.service.impl.HumanService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +42,13 @@ public class HumanController {
     }
 
     @DeleteMapping("/{humanId}")
+    @Operation(summary = "УДАЛИТЬ человека по АйДи", description = "УДАЛЯЕМ человека")
     public void delete(@PathVariable("humanId") Long id) {
         humanService.delete(id);
     }
 
     @PutMapping("/attach_vauchers")
-    @Operation(summary = "добавить путевки(несколько) к человеку", description = "добавить путевку к человеку")
+    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку", description = "добавить путевку к человеку")
     public Human attachVauchersToHuman(@RequestParam Long humanId,@RequestParam Long vaucherId){
         return humanService.attachVauchers_ToHuman(humanId, vaucherId);
     }

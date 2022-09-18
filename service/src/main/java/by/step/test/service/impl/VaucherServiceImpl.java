@@ -33,7 +33,6 @@ public class VaucherServiceImpl implements IVaucherService {
         if (vaucherOptional.isPresent()) {
             return vaucherOptional.get();
         } else {
-//            System.out.println("объект по ID не найден");
             throw new ServiceException("объект по ID не найден");
         }
     }

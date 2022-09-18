@@ -15,23 +15,22 @@ import java.util.Optional;
 public interface IHumanRepository extends JpaRepository<Human, Long> {
 
 
-    //    List<Human> findAll();
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @Query(value = "SELECT * FROM Human", nativeQuery = true)
     List<Human> findAll();
 
-        Human save(Human human);
-//    @Query(value = "INSERT INTO human (name, surname, age), VALUES('VASYA', 'Vasiliev', 22)")
-//    Human save(Human human);
+//    @Transactional(isolation = Isolation.READ_COMMITTED)
+//    @Query(name = "INSERT INTO human (name, surname, age) VALUES ('VASYA', 'Vasiliev', 122)"
+//            , nativeQuery = true)
+    Human save(Human human);
 
-//@Query(value = "DELETE FROM Human where Human.id=5")
-    void deleteById( Long id);
+    //@Query(value = "DELETE FROM Human where Human.id=5")
+    void deleteById(Long id);
 
 
     Optional<Human> findById(Long id);
 
 
 //    List<Human> findAllByName(String name);
-//
 //    List<Human> findAllBySurnameAndAge(String surname, Integer age);
 }
