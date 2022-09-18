@@ -30,12 +30,6 @@ public class VoucherController {
         return vaucherService.deleteVaucher(vaucher);
     }
 
-    @GetMapping("/calcvaucherprice")
-    public double calculateVaucherPrice(Vaucher vaucher) {
-        return vaucher.getPriceOneDay() * vaucher.getDays();
-    }
-
-
     @GetMapping("/allvauchers")
     public List<Vaucher> getAllVauchers() {
         return vaucherService.findAllVauchers();
@@ -52,15 +46,21 @@ public class VoucherController {
         return vaucher;
     }
 
-    @GetMapping("/buildvaucher")
-    public Vaucher buildVaucher(VaucherType type, int price, int days) {
-        Vaucher vaucherResult = vaucherService.findAllVauchers().stream()
-                .filter(vaucherType -> vaucherType.getVaucherType().equals(type))
-                .filter(vaucherPrice -> vaucherPrice.getPriceOneDay() == price)
-                .filter(vaucherDays -> vaucherDays.getDays() == days)
-                .findAny().orElseThrow(RuntimeException::new);
-        return vaucherResult;
-    }
+//    @GetMapping("/calcvaucherprice")
+//    public double calculateVaucherPrice(Vaucher vaucher) {
+//        return vaucher.getPriceOneDay() * vaucher.getDays();
+//    }
+
+
+//    @GetMapping("/buildvaucher")
+//    public Vaucher buildVaucher(VaucherType type, int price, int days) {
+//        Vaucher vaucherResult = vaucherService.findAllVauchers().stream()
+//                .filter(vaucherType -> vaucherType.getVaucherType().equals(type))
+//                .filter(vaucherPrice -> vaucherPrice.getPriceOneDay() == price)
+//                .filter(vaucherDays -> vaucherDays.getDays() == days)
+//                .findAny().orElseThrow(RuntimeException::new);
+//        return vaucherResult;
+//    }
 
 //    @PostMapping("/savetype")
 //    public VaucherType saveNewVaucherType(@RequestBody VaucherType vaucherType) {

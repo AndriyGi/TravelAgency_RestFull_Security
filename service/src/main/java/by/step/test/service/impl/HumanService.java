@@ -4,6 +4,7 @@ import by.step.test.dao.entity.Human;
 import by.step.test.dao.entity.Vaucher;
 import by.step.test.dao.repository.IHumanRepository;
 import by.step.test.dao.repository.IVaucherRepository;
+import by.step.test.dto.HumanDto;
 import by.step.test.service.IHumanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,18 +16,14 @@ import java.util.List;
 
 @Service
 public class HumanService implements IHumanService {
-
-    @Autowired
-    private IVaucherRepository vaucherRepository;
     @Autowired
     private IHumanRepository humanRepository;
+    @Autowired
+    private IVaucherRepository vaucherRepository;
 
     @Override
-//    public List<Human> findAll() {
-//        return humanRepository.findAll();
-//    }
     public List<Human> findAll() {
-        return humanRepository.findAllHumans();
+        return humanRepository.findAll();
     }
 
     @Override
@@ -39,29 +36,16 @@ public class HumanService implements IHumanService {
         humanRepository.deleteById(id);
     }
 
-    public List<Human> findAllByName(String name) {
-        List<Human> allHumansByName = humanRepository.findAllByName(name);
-        return allHumansByName;
+    @Override
+    public HumanDto findById(Long id) {
+        Human human = humanRepository.findById(id).get();
+        HumanDto humanDto = new HumanDto(human.getId(), human.getName(), human.getSurname()
+                , human.getAge());
+        return humanDto;
     }
 
     @Override
-    public List<Human> findAllBySurnameAndAge(String surname, Integer age) {
-        return humanRepository.findAllBySurnameAndAge(surname, age);
-    }
-
-
-//    @Override
-//    public Human attachVaucherToHuman(Long humanId, Long vaucherId) {
-//        Human human = humanRepository.findById(humanId)
-//                .orElseThrow(EntityNotFoundException::new);
-//        Vaucher vaucher = vaucherRepository.findById(vaucherId)
-//                .orElseThrow(EntityNotFoundException::new);
-//        human.setVaucher(vaucher);
-//        return human;
-//    }
-
-    @Override
-    public Human attachVauchersToHuman(Long humanId, Long vaucherId) {
+    public Human attachVauchers_ToHuman(Long humanId, Long vaucherId) {
         Human human = humanRepository.findById(humanId)
                 .orElseThrow(EntityNotFoundException::new);
         Vaucher vaucher = vaucherRepository.findById(vaucherId)
@@ -71,6 +55,26 @@ public class HumanService implements IHumanService {
         human.setVaucherList(vaucherList);
         return human;
     }
+    //    @Override
+//    public Human attachVaucherToHuman(Long humanId, Long vaucherId) {
+//        Human human = humanRepository.findById(humanId)
+//                .orElseThrow(EntityNotFoundException::new);
+//        Vaucher vaucher = vaucherRepository.findById(vaucherId)
+//                .orElseThrow(EntityNotFoundException::new);
+//        human.setVaucher(vaucher);
+//        return human;
+//    }
+
+
+//    public List<Human> findAllByName(String name) {
+//        List<Human> allHumansByName = humanRepository.findAllByName(name);
+//        return allHumansByName;
+//    }
+
+//    @Override
+//    public List<Human> findAllBySurnameAndAge(String surname, Integer age) {
+//        return humanRepository.findAllBySurnameAndAge(surname, age);
+//    }
 
 
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 
 @Service
 @Scope("prototype")
@@ -25,7 +25,6 @@ public class VaucherServiceImpl implements IVaucherService {
     @Override
     public List<Vaucher> findAllVauchers() {
         return vaucherRepository.findAll();
-        // to do - add vauchers
     }
 
     @Override
@@ -38,18 +37,49 @@ public class VaucherServiceImpl implements IVaucherService {
             throw new ServiceException("объект по ID не найден");
         }
     }
-
     @Override
     public Vaucher saveNewVaucher(Vaucher vaucher) {
-        return vaucherRepository
-                .saveAndFlush(vaucher);
+        double calculatedVaucherPrice = vaucher.getPriceOneDay() * vaucher.getDays();
+        vaucher.setVaucherFullPrice(calculatedVaucherPrice);
+        Vaucher vaucherSaved = vaucherRepository.saveAndFlush(vaucher);
+        return vaucherSaved;
     }
-
     @Override
     public Vaucher deleteVaucher(Vaucher vaucher) {
         vaucherRepository.delete(vaucher);
         return vaucher;
     }
+//    @Override
+//    public List<Vaucher> findVauchersByParam(VaucherType type, Double fromPrice, Double toPrice
+//            , Integer fromDays, Integer toDays) {
+//        List<Vaucher> vaucherList = vaucherRepository.findAll();
+//        List<Vaucher> resultListParam = vaucherList.stream().filter(vaucher -> {
+//            boolean resultDates = vaucher.getDays() >= fromDays && vaucher.getDays() <= toDays;
+//            boolean resultPrice = vaucher.getPriceOneDay() >= fromPrice && vaucher.getPriceOneDay() <= toPrice;
+//            boolean resultType = vaucher.getVaucherType().equals(type);
+//            return resultDates && resultPrice && resultType;
+//        }).collect(Collectors.toList());
+//        return resultListParam;
+//    }
+
+//    @Override
+//    public void vaucherSortPrice() {
+//        vaucherRepository.findAll().sort(Comparator.comparing(Vaucher::getPriceOneDay));
+//    }
+//
+//    @Override
+//    public void vaucherSortDays() {
+//        vaucherRepository.findAll().sort(Comparator.comparing(Vaucher::getDays));
+//    }
+//
+//    @Override
+//    public void vaucherSortType() {
+//        vaucherRepository.findAll().sort(Comparator.comparing(Vaucher::getVaucherType));
+//    }
+//
+
+
+
 
 //
 //    @Override
@@ -61,45 +91,15 @@ public class VaucherServiceImpl implements IVaucherService {
 //            throw new ServiceException("объект по ID не найден");
 //        }
 //    }
-//
+
 //    @Override
-//    public VaucherType saveNewVaucherType(VaucherType vaucherType) {
-//        return vaucherRepository.saveNewVaucherType(vaucherType);
+//    public Vaucher buildVaucher(VaucherType type, Double price, Integer days) {
+//        Vaucher vaucherResult = vaucherRepository.findAll().stream()
+//                .filter(vaucherType -> vaucherType.getVaucherType().equals(type))
+//                .filter(vaucherPrice -> vaucherPrice.getPriceOneDay().equals(price))
+//                .filter(vaucherDays -> vaucherDays.getDays().equals(days))
+//                .findAny().orElseThrow(RuntimeException::new);
+//        return null;
 //    }
-//
-
-    @Override
-    public Vaucher buildVaucher(VaucherType type, int price, int days) {
-        Vaucher vaucherResult = vaucherRepository.findAll().stream()
-                .filter(vaucherType -> vaucherType.getVaucherType().equals(type))
-                .filter(vaucherPrice -> vaucherPrice.getPriceOneDay() == price)
-                .filter(vaucherDays -> vaucherDays.getDays() == days)
-                .findAny().orElseThrow(RuntimeException::new);
-//        double calculatedVaucherPrice = calculateVaucherPrice(vaucherResult);
-
-        return vaucherResult;
-    }
-
-    public double calculateVaucherPrice(Vaucher vaucher) {
-        return vaucher.getPriceOneDay() * vaucher.getDays();
-
-    }
-
-
-    @Override
-    public void vaucherSortPrice() {
-        vaucherRepository.findAll().sort(Comparator.comparing(Vaucher::getPriceOneDay));
-    }
-
-    @Override
-    public void vaucherSortDays() {
-        vaucherRepository.findAll().sort(Comparator.comparing(Vaucher::getDays));
-    }
-
-    @Override
-    public void vaucherSortType() {
-        vaucherRepository.findAll().sort(Comparator.comparing(Vaucher::getVaucherType));
-    }
-
 
 }

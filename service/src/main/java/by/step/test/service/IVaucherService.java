@@ -12,23 +12,23 @@ public interface IVaucherService {
     Vaucher findById(Long id) throws ServiceException;
     Vaucher saveNewVaucher(Vaucher vaucher);
     Vaucher deleteVaucher(Vaucher vaucher);
-    Vaucher buildVaucher(VaucherType type, int price, int days);
 
-    public double calculateVaucherPrice(Vaucher vaucher);
 
-    void vaucherSortPrice();
-    void vaucherSortDays();
-    void vaucherSortType();
+//    List<Vaucher> findVauchersByParam(VaucherType type, Double fromPrice, Double toPrice
+//            , Integer fromDays, Integer toDays);
+
+
+//    void vaucherSortPrice();
+//    void vaucherSortDays();
+//    void vaucherSortType();
+
 
 
 //    VaucherType saveNewVaucherType(VaucherType vaucherType);
 //    Object findAllByVaucherType(VaucherType vaucherType) throws ServiceException;
 
-
 //    Vaucher getAllVauchers(List<Vaucher> vaucher);
 //    List<VaucherType> findAllVaucherTypes();
-
-
 
 
 }

@@ -2,7 +2,6 @@ package by.step.test.dao.entity;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Table
@@ -10,7 +9,8 @@ import java.util.List;
 @Getter
 @Setter
 public class Human {
-    public Human() { }
+    public Human() {
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,17 +19,19 @@ public class Human {
     private String surname;
     private Integer age;
 
-//    @ManyToMany(cascade = CascadeType.PERSIST)
-//    @JoinTable(name = "human_vaucher", joinColumns = @JoinColumn(name = "human_id")
-//            , inverseJoinColumns = @JoinColumn(name = "vaucher_id"))
-//    private List<Vaucher> vaucherList = new ArrayList<>();
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "vaucher_id")
 //    private Vaucher vaucher;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+
+    @OneToMany(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "human_id")
     private List<Vaucher> vaucherList;
+
+//    @ManyToMany(cascade = CascadeType.PERSIST)
+//    @JoinTable(name = "human_vaucher", joinColumns = @JoinColumn(name = "human_id")
+//            , inverseJoinColumns = @JoinColumn(name = "vaucher_id"))
+//    private List<Vaucher> vaucherList = new ArrayList<>();
 
 }
