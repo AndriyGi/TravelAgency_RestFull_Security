@@ -26,6 +26,14 @@ public class Vaucher {
     private Integer days;
     private Double vaucherFullPrice;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "va_id")
+//    private Human human;
+
+
+
+
+
 //    @OneToMany(cascade = CascadeType.PERSIST)
 //    @JoinColumn(name = "vaucher_id")
 //    private List<Human> humanList;
