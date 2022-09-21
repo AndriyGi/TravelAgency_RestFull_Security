@@ -23,7 +23,7 @@ public class HumanController {
         this.humanService = humanService;
     }
 
-    @GetMapping
+    @GetMapping("find_all")
     @Operation(summary = "Найти всех людей", description = "All clients of Agency")
     public List<Human> findAll() {
         return humanService.findAll();
@@ -48,9 +48,11 @@ public class HumanController {
     }
 
     @PutMapping("/attach_vauchers")
-    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку", description = "добавить путевку к человеку")
-    public Human attachVauchersToHuman(@RequestParam Long humanId,@RequestParam Long vaucherId){
-        return humanService.attachVauchers_ToHuman(humanId, vaucherId);
+    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
+            , description = "добавить путевку к человеку")
+    public Human attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
+        Human human =  humanService.attachVauchers_toHuman(humanId, vaucherId);
+        return human;
     }
 
 //    @GetMapping("/filter")
@@ -69,7 +71,6 @@ public class HumanController {
 //    public Human attachVaucherToHuman(@RequestParam Long humanId,@RequestParam Long vaucherId){
 //        return humanService.attachVaucherToHuman(humanId, vaucherId);
 //    }
-
 
 
 }

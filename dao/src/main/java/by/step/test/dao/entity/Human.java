@@ -1,6 +1,7 @@
 package by.step.test.dao.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public class Human {
     public Human() {
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,15 +21,19 @@ public class Human {
     private String surname;
     private Integer age;
 
+    //===============================
+    @OneToMany(mappedBy = "human", cascade = CascadeType.MERGE)
+    private List<Vaucher> vaucherList;
+
+//-------------------------------
+//    @ManyToOne
+//    private Vaucher vaucher;
+
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "vaucher_id")
 //    private Vaucher vaucher;
 
-
-    @OneToMany(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "human_id")
-    private List<Vaucher> vaucherList;
 
 //    @ManyToMany(cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "human_vaucher", joinColumns = @JoinColumn(name = "human_id")

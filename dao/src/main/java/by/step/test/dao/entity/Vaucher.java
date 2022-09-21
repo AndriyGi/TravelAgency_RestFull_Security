@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
-import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,13 +26,16 @@ public class Vaucher {
     private Integer days;
     private Double vaucherFullPrice;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "va_id")
-//    private Human human;
+  //=================================================
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "human_id")
+    private Human human;
 
+////-----------------------------------------------
+//    @OneToMany(mappedBy = "vaucher", cascade = CascadeType.REFRESH)
+//    private List<Human> humanList;
 
-
-
+//_________________________________________
 
 //    @OneToMany(cascade = CascadeType.PERSIST)
 //    @JoinColumn(name = "vaucher_id")

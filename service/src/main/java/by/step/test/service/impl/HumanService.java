@@ -5,11 +5,11 @@ import by.step.test.dao.entity.Vaucher;
 import by.step.test.dao.repository.IHumanRepository;
 import by.step.test.dao.repository.IVaucherRepository;
 import by.step.test.dto.HumanDto;
+import by.step.test.exception.EntityNotFoundException;
 import by.step.test.service.IHumanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.*;
 import java.util.List;
 
 
@@ -43,8 +43,13 @@ public class HumanService implements IHumanService {
         return humanDto;
     }
 
+//    @Override
+//    public Human attachVauchers_toHuman(Long humanId, Long vaucherId) {
+//        return humanRepository.attachVauchers_toHuman(humanId, vaucherId);
+//    }
+
     @Override
-    public Human attachVauchers_ToHuman(Long humanId, Long vaucherId) {
+    public Human attachVauchers_toHuman(Long humanId, Long vaucherId) {
         Human human = humanRepository.findById(humanId)
                 .orElseThrow(EntityNotFoundException::new);
         Vaucher vaucher = vaucherRepository.findById(vaucherId)
@@ -52,7 +57,7 @@ public class HumanService implements IHumanService {
         List<Vaucher> vaucherList = human.getVaucherList();
         vaucherList.add(vaucher);
         human.setVaucherList(vaucherList);
-        return human;
+        return humanRepository.saveAndFlush(human);
     }
 
     //    @Override

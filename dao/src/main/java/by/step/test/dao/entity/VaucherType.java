@@ -4,6 +4,7 @@ public enum VaucherType {
 
     REST,
     THERAPY,
-    TOURISM
+    TOURISM,
+    SPORT
 
 }
