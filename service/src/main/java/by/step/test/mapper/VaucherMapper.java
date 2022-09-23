@@ -16,6 +16,6 @@ public interface VaucherMapper {
     Vaucher vaucherDtoToVaucher(VaucherDto vaucherDto);
     VaucherDto vaucherToVaucherDto(Vaucher vaucher);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = IGNORE)
-    Vaucher updateVaucherFromVaucherDto(VaucherDto vaucherDto, @MappingTarget Vaucher vaucher);
+//    @BeanMapping(nullValuePropertyMappingStrategy = IGNORE)
+//    Vaucher updateVaucherFromVaucherDto(VaucherDto vaucherDto, @MappingTarget Vaucher vaucher);
 }

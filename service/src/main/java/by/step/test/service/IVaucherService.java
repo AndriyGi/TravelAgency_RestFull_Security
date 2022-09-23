@@ -12,7 +12,7 @@ public interface IVaucherService {
     Vaucher saveNewVaucher(Vaucher vaucher);
     Vaucher deleteVaucher(Vaucher vaucher);
 
-    Vaucher attachVauchers_toHuman(Long humanId, Long vaucherId);
+    Integer attachVauchers_toHuman(Long humanId, Long vaucherId);
 
 
 //    List<Vaucher> findVauchersByParam(VaucherType type, Double fromPrice, Double toPrice

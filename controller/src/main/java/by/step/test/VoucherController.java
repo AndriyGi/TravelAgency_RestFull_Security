@@ -70,10 +70,9 @@ public class VoucherController {
     @PutMapping("/attach_vauchers")
     @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
             , description = "добавить путевку к человеку")
-    public VaucherDto attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
-        VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucherService
-                .attachVauchers_toHuman(humanId, vaucherId));
-        return vaucherDto;
+    public Integer attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
+        Integer integer = vaucherService.attachVauchers_toHuman(humanId, vaucherId);
+        return integer;
     }
 
 //    @GetMapping("/calcvaucherprice")

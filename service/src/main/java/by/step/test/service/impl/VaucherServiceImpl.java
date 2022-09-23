@@ -11,6 +11,7 @@ import by.step.test.exception.ServiceException;
 import by.step.test.mapper.HumanMapper;
 import by.step.test.mapper.VaucherMapper;
 import by.step.test.service.IVaucherService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -18,18 +19,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 @Scope("prototype")
 public class VaucherServiceImpl implements IVaucherService {
 
     @Autowired
     private IVaucherRepository vaucherRepository;
+    @Autowired
     private IHumanRepository humanRepository;
-    private Vaucher vaucher;
-    private VaucherDto vaucherDto;
-    private Human human;
-    private HumanDto humanDto;
+//    private Vaucher vaucher;
+//    private VaucherDto vaucherDto;
+//    private Human human;
+//    private HumanDto humanDto;
+    @Autowired
     private HumanMapper humanMapper;
+    @Autowired
     private VaucherMapper vaucherMapper;
 
     @Override
@@ -46,6 +51,7 @@ public class VaucherServiceImpl implements IVaucherService {
             throw new ServiceException("объект по ID не найден");
         }
     }
+
     @Override
     public Vaucher saveNewVaucher(Vaucher vaucher) {
         double calculatedVaucherPrice = vaucher.getPriceOneDay() * vaucher.getDays();
@@ -53,14 +59,21 @@ public class VaucherServiceImpl implements IVaucherService {
         Vaucher vaucherSaved = vaucherRepository.saveAndFlush(vaucher);
         return vaucherSaved;
     }
+
     @Override
     public Vaucher deleteVaucher(Vaucher vaucher) {
         vaucherRepository.delete(vaucher);
         return vaucher;
     }
 
+//    @Override
+//    public Integer attachVauchers_toHuman(Long humanId, Long vaucherId) {
+//        return vaucherRepository.attachVaucherss_toHuman(humanId, vaucherId);
+//    }
+
+
     @Override
-    public Vaucher attachVauchers_toHuman(Long humanId, Long vaucherId) {
+    public Integer attachVauchers_toHuman(Long humanId, Long vaucherId) {
         Human human = humanRepository.findById(humanId)
                 .orElseThrow(EntityNotFoundException::new);
         HumanDto humanDto = humanMapper.humanToHumanDto(human);
@@ -70,11 +83,14 @@ public class VaucherServiceImpl implements IVaucherService {
         VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucher);
 
         List<Vaucher> vaucherList = human.getVaucherList();
-        vaucherList.add(vaucherMapper.vaucherDtoToVaucher(vaucherDto));
+        vaucherList.add(vaucher);
         human.setVaucherList(vaucherList);
-        return vaucherRepository.saveAndFlush(vaucher);
+        humanRepository.saveAndFlush(human);
+//        System.out.println(human.toString());
+        return 2;
 
     }
+}
 
 //    @Override
 //    public List<Vaucher> findVauchersByParam(VaucherType type, Double fromPrice, Double toPrice
@@ -129,4 +145,4 @@ public class VaucherServiceImpl implements IVaucherService {
 //        return null;
 //    }
 
-}
+
