@@ -4,6 +4,7 @@ package by.step.test;
 import by.step.test.dao.entity.Human;
 import by.step.test.dto.HumanDto;
 import by.step.test.service.IHumanService;
+import by.step.test.service.IVaucherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class HumanController {
 
     @Autowired
     private IHumanService humanService;
+    @Autowired
+    private IVaucherService vaucherService;
 
     public HumanController(IHumanService humanService) {
         this.humanService = humanService;
@@ -47,13 +50,13 @@ public class HumanController {
         humanService.delete(id);
     }
 
-    @PutMapping("/attach_vauchers")
-    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
-            , description = "добавить путевку к человеку")
-    public Human attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
-        Human human =  humanService.attachVauchers_toHuman(humanId, vaucherId);
-        return human;
-    }
+//    @PutMapping("/attach_vauchers")
+//    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
+//            , description = "добавить путевку к человеку")
+//    public HumanDto attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
+//        HumanDto humanDto = vaucherService.attachVauchers_toHuman(humanDtoId, vaucherId);
+//        return humanDto;
+//    }
 
 //    @GetMapping("/filter")
 //    public List<Human> findAllByName(@RequestParam("name") String name) {

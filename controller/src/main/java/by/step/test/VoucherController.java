@@ -1,17 +1,28 @@
 package by.step.test;
 
+import by.step.test.dao.entity.Human;
 import by.step.test.dao.entity.Vaucher;
 import by.step.test.dao.entity.VaucherType;
+import by.step.test.dao.repository.IHumanRepository;
+import by.step.test.dao.repository.IVaucherRepository;
+import by.step.test.dto.HumanDto;
+import by.step.test.dto.VaucherDto;
 import by.step.test.exception.ServiceException;
+import by.step.test.mapper.HumanMapper;
+import by.step.test.mapper.VaucherMapper;
 import by.step.test.service.IVaucherService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 @RestController
 @RequestMapping("/vouchers")
 @Tag(name = "Путевки", description = "для работы с путевками")
@@ -19,6 +30,16 @@ public class VoucherController {
 
     @Autowired
     private IVaucherService vaucherService;
+
+    @Autowired
+    private IVaucherRepository vaucherRepository;
+    private IHumanRepository humanRepository;
+    private Vaucher vaucher;
+    private VaucherDto vaucherDto;
+    private Human human;
+    private HumanDto humanDto;
+    private HumanMapper humanMapper;
+    private VaucherMapper vaucherMapper;
 
     @PostMapping("/save")
     public Vaucher save(@RequestBody Vaucher vaucher) {
@@ -44,6 +65,15 @@ public class VoucherController {
             e.printStackTrace();
         }
         return vaucher;
+    }
+
+    @PutMapping("/attach_vauchers")
+    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
+            , description = "добавить путевку к человеку")
+    public VaucherDto attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
+        VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucherService
+                .attachVauchers_toHuman(humanId, vaucherId));
+        return vaucherDto;
     }
 
 //    @GetMapping("/calcvaucherprice")

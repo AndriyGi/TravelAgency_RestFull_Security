@@ -14,14 +14,14 @@ public interface IHumanService {
 
     HumanDto findById(Long id);
 
-
+//    HumanDto attachVauchers_toHuman(Long humanId,Long vaucherId);
 
 //    List<Human> findAllByName(String name);
-//
-//    List<Human> findAllBySurnameAndAge(String surname, Integer age);
 
+//    List<Human> findAllBySurnameAndAge(String surname, Integer age);
 //    @Query(value = "UPDATE human_vaucher_list set human_id = 1 where vaucher_list_id = 1",nativeQuery = true)
-     Human attachVauchers_toHuman(Long humanId,Long vaucherId);
+
+
 
 
 //    Human attachVaucherToHuman(Long humanId, Long vaucherId);

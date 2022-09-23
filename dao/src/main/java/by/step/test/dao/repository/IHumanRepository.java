@@ -24,12 +24,13 @@ public interface IHumanRepository extends JpaRepository<Human, Long> {
 
     Optional<Human> findById(Long id);
 
-//    @Query(value = "UPDATE vaucher " +
-//            "set human_id=:humanId " +
-//            "where id = :vaucherId"
-//            , nativeQuery = true)
-//    Human attachVauchers_toHuman(@Param("humanId") Long humanId, @Param("vaucherId") Long vaucherId);
-//
+    @Query(value = "UPDATE vaucher " +
+            "set human_id=:humanId " +
+            "where id = :vaucherId"
+            , nativeQuery = true)
+    Human attachVauchers_toHuman(@Param("humanId") Long humanId
+            , @Param("vaucherId") Long vaucherId);
+
 
 //    List<Human> findAllByName(String name);
 //    List<Human> findAllBySurnameAndAge(String surname, Integer age);
