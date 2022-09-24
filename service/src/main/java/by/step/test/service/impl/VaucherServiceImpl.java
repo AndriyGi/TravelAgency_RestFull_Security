@@ -12,6 +12,7 @@ import by.step.test.mapper.HumanMapper;
 import by.step.test.mapper.VaucherMapper;
 import by.step.test.service.IVaucherService;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+
 @Service
 @Scope("prototype")
 public class VaucherServiceImpl implements IVaucherService {
@@ -28,14 +29,17 @@ public class VaucherServiceImpl implements IVaucherService {
     private IVaucherRepository vaucherRepository;
     @Autowired
     private IHumanRepository humanRepository;
-//    private Vaucher vaucher;
-//    private VaucherDto vaucherDto;
-//    private Human human;
-//    private HumanDto humanDto;
+    private Human human;
+    private Vaucher vaucher;
+    @Autowired
+    private VaucherDto vaucherDto;
+    @Autowired
+    private HumanDto humanDto;
     @Autowired
     private HumanMapper humanMapper;
     @Autowired
     private VaucherMapper vaucherMapper;
+
 
     @Override
     public List<Vaucher> findAllVauchers() {
@@ -72,8 +76,8 @@ public class VaucherServiceImpl implements IVaucherService {
 //    }
 
 
-    @Override
-    public Integer attachVauchers_toHuman(Long humanId, Long vaucherId) {
+    //    @Override
+    public Vaucher attachVauchers_toHuman(Long humanId, Long vaucherId) {
         Human human = humanRepository.findById(humanId)
                 .orElseThrow(EntityNotFoundException::new);
         HumanDto humanDto = humanMapper.humanToHumanDto(human);
@@ -84,12 +88,26 @@ public class VaucherServiceImpl implements IVaucherService {
 
         List<Vaucher> vaucherList = human.getVaucherList();
         vaucherList.add(vaucher);
-        human.setVaucherList(vaucherList);
-        humanRepository.saveAndFlush(human);
+//        human.setVaucherList(vaucherList);
+        human.getVaucherList().forEach(vaucher1 -> vaucher
+                .setHuman(humanMapper.humanDtoToHuman(humanDto)));
+        vaucherRepository.saveAndFlush(vaucher);
 //        System.out.println(human.toString());
-        return 2;
+        return vaucher;
 
     }
+//    @Override
+//    public void save(Vaucher vaucher) {
+//        //TODO смотреть сюда для связи one-to-many
+//        human.getVaucherList().forEach(vaucher1 -> vaucher.setHuman(human));
+//        vaucherRepository.save(vaucher);
+//    }
+//    public void save(Zoo zoo) {
+//        //TODO смотреть сюда для связи one-to-many
+//        zoo.getAnimalList().forEach(animal -> animal.setZoo(zoo));
+//        zooRepository.save(zoo);
+//    }
+
 }
 
 //    @Override
@@ -120,8 +138,6 @@ public class VaucherServiceImpl implements IVaucherService {
 //        vaucherRepository.findAll().sort(Comparator.comparing(Vaucher::getVaucherType));
 //    }
 //
-
-
 
 
 //

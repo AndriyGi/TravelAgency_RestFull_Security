@@ -20,6 +20,7 @@ public interface IVaucherRepository extends JpaRepository<Vaucher, Long> {
 
 
 
+
 //    List<Vaucher> findAllVauchers();
 //    Vaucher findById(Long id);
 //    Vaucher saveNewVaucher(Vaucher vaucher);

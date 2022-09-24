@@ -20,7 +20,7 @@ public class VaucherConverter {
 
     public VaucherDto fromVaucherToVaucherDto(Vaucher vaucher){
         VaucherDto vaucherDto = new VaucherDto(vaucher.getId(), vaucher.getPriceOneDay()
-                , vaucher.getDays(), vaucher.getVaucherFullPrice());
+                , vaucher.getDays(), vaucher.getVaucherFullPrice(), vaucher.getVaucherType());
         return vaucherDto;
     }
 }

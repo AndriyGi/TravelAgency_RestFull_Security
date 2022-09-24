@@ -4,13 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Getter
 @Setter
+@Component
 public class HumanDto {
 
 
@@ -19,5 +21,10 @@ public class HumanDto {
     private String surname;
     private Integer age;
 
-
+    public HumanDto(Long id, String name, String surname, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+    }
 }

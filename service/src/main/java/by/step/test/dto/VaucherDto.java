@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Component
 public class VaucherDto {
 
         private Long id;
@@ -21,7 +22,16 @@ public class VaucherDto {
         private Double vaucherFullPrice;
         private VaucherType vaucherType;
 
-
-        public VaucherDto(Long id, Double priceOneDay, Integer days, Double vaucherFullPrice) {
+        public VaucherDto(Long id, Double priceOneDay, Integer days, Double vaucherFullPrice, VaucherType vaucherType) {
+                this.id = id;
+                this.priceOneDay = priceOneDay;
+                this.days = days;
+                this.vaucherFullPrice = vaucherFullPrice;
+                this.vaucherType = vaucherType;
         }
+
+        //
+//        public VaucherDto(Long id, Double priceOneDay, Integer days
+//                , Double vaucherFullPrice) {
+//        }
 }

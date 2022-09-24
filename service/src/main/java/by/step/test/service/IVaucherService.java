@@ -8,11 +8,16 @@ import java.util.List;
 public interface IVaucherService {
 
     List<Vaucher> findAllVauchers();
+
     Vaucher findById(Long id) throws ServiceException;
+
     Vaucher saveNewVaucher(Vaucher vaucher);
+
     Vaucher deleteVaucher(Vaucher vaucher);
 
-    Integer attachVauchers_toHuman(Long humanId, Long vaucherId);
+//     void save(Vaucher vaucher);
+
+//    Human attachVauchers_toHuman(Long humanId, Long vaucherId);
 
 
 //    List<Vaucher> findVauchersByParam(VaucherType type, Double fromPrice, Double toPrice
@@ -22,7 +27,6 @@ public interface IVaucherService {
 //    void vaucherSortPrice();
 //    void vaucherSortDays();
 //    void vaucherSortType();
-
 
 
 //    VaucherType saveNewVaucherType(VaucherType vaucherType);

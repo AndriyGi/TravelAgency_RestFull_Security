@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@AllArgsConstructor
+
 @Service
 public class HumanService implements IHumanService {
     @Autowired
@@ -49,7 +49,7 @@ public class HumanService implements IHumanService {
     @Override
     public HumanDto findById(Long id) {
         Human human = humanRepository.findById(id).get();
-       return humanConverter.fromHumanToHumanDto(human);
+       return humanMapper.humanToHumanDto(human);
 
 //        HumanDto humanDto = new HumanDto(human.getId(), human.getName(), human.getSurname()
 //                , human.getAge());

@@ -2,7 +2,6 @@ package by.step.test;
 
 import by.step.test.dao.entity.Human;
 import by.step.test.dao.entity.Vaucher;
-import by.step.test.dao.entity.VaucherType;
 import by.step.test.dao.repository.IHumanRepository;
 import by.step.test.dao.repository.IVaucherRepository;
 import by.step.test.dto.HumanDto;
@@ -11,6 +10,7 @@ import by.step.test.exception.ServiceException;
 import by.step.test.mapper.HumanMapper;
 import by.step.test.mapper.VaucherMapper;
 import by.step.test.service.IVaucherService;
+import by.step.test.service.impl.VaucherServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -40,6 +39,7 @@ public class VoucherController {
     private HumanDto humanDto;
     private HumanMapper humanMapper;
     private VaucherMapper vaucherMapper;
+    private VaucherServiceImpl vaucherServiceImpl;
 
     @PostMapping("/save")
     public Vaucher save(@RequestBody Vaucher vaucher) {
@@ -67,12 +67,21 @@ public class VoucherController {
         return vaucher;
     }
 
+//    @PutMapping("/attach_vauchers")
+//    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
+//            , description = "добавить путевку к человеку")
+//    public Integer attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
+//        Integer integer = vaucherRepository.attachVaucherss_toHuman(humanId, vaucherId);
+//        return integer;
+//    }
+//
     @PutMapping("/attach_vauchers")
     @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
             , description = "добавить путевку к человеку")
-    public Integer attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
-        Integer integer = vaucherService.attachVauchers_toHuman(humanId, vaucherId);
-        return integer;
+    public VaucherDto attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
+        return vaucherMapper.vaucherToVaucherDto(
+                vaucherServiceImpl.attachVauchers_toHuman(humanId, vaucherId)
+        );
     }
 
 //    @GetMapping("/calcvaucherprice")
