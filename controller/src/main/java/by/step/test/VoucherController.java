@@ -32,13 +32,21 @@ public class VoucherController {
 
     @Autowired
     private IVaucherRepository vaucherRepository;
+    @Autowired
     private IHumanRepository humanRepository;
-    private Vaucher vaucher;
-    private VaucherDto vaucherDto;
+
     private Human human;
+    private Vaucher vaucher;
+    @Autowired
+    private VaucherDto vaucherDto;
+
+    @Autowired
     private HumanDto humanDto;
+    @Autowired
     private HumanMapper humanMapper;
+    @Autowired
     private VaucherMapper vaucherMapper;
+    @Autowired
     private VaucherServiceImpl vaucherServiceImpl;
 
     @PostMapping("/save")

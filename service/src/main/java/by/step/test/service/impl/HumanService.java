@@ -56,30 +56,14 @@ public class HumanService implements IHumanService {
 //        return humanDto;
     }
 
+
     //    @Override
 //    public HumanDto attachVauchers_toHuman(Long humanId, Long vaucherId) {
 //        Human human = humanRepository.attachVauchers_toHuman(humanId, vaucherId);
 //        HumanDto humanDto = humanConverter.fromHumanToHumanDto(human);
 //        return humanDto;
 //    }
-//    @Override
-//    public Human attachVauchers_toHuman(Long humanId, Long vaucherId) {
-//        Human human = humanRepository.findById(humanId)
-//                .orElseThrow(EntityNotFoundException::new);
-//        HumanDto humanDto = humanConverter.fromHumanToHumanDto(human);
-//
-//        Vaucher vaucher = vaucherRepository.findById(vaucherId)
-//                .orElseThrow(EntityNotFoundException::new);
-//        VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucher);
-//
-//        vaucher.setHuman(humanDto.getId());
-//
-//        List<Vaucher> vaucherList = human.setVaucherList(vaucherDto);
-//        vaucherList.add(vaucherDto);
-//        human.setVaucherList(vaucherDto);
-//        return humanRepository.saveAndFlush(human);
-//
-//    }
+
     //    @Override
 //    public Human attachVaucherToHuman(Long humanId, Long vaucherId) {
 //        Human human = humanRepository.findById(humanId)

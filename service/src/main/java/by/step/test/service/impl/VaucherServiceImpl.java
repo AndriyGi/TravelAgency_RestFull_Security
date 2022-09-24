@@ -70,6 +70,7 @@ public class VaucherServiceImpl implements IVaucherService {
         return vaucher;
     }
 
+    //          ПРИСВОЕНИЕ  через метод СКЛ запроса в репозитории ваучера
 //    @Override
 //    public Integer attachVauchers_toHuman(Long humanId, Long vaucherId) {
 //        return vaucherRepository.attachVaucherss_toHuman(humanId, vaucherId);
@@ -80,35 +81,22 @@ public class VaucherServiceImpl implements IVaucherService {
     public Vaucher attachVauchers_toHuman(Long humanId, Long vaucherId) {
         Human human = humanRepository.findById(humanId)
                 .orElseThrow(EntityNotFoundException::new);
-        HumanDto humanDto = humanMapper.humanToHumanDto(human);
-
         Vaucher vaucher = vaucherRepository.findById(vaucherId)
                 .orElseThrow(EntityNotFoundException::new);
-        VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucher);
 
         List<Vaucher> vaucherList = human.getVaucherList();
-        vaucherList.add(vaucher);
-//        human.setVaucherList(vaucherList);
-        human.getVaucherList().forEach(vaucher1 -> vaucher
-                .setHuman(humanMapper.humanDtoToHuman(humanDto)));
+        human.getVaucherList().forEach(vaucher1 -> vaucher.setHuman(human));
         vaucherRepository.saveAndFlush(vaucher);
-//        System.out.println(human.toString());
         return vaucher;
-
     }
-//    @Override
-//    public void save(Vaucher vaucher) {
-//        //TODO смотреть сюда для связи one-to-many
-//        human.getVaucherList().forEach(vaucher1 -> vaucher.setHuman(human));
-//        vaucherRepository.save(vaucher);
-//    }
+}
+
 //    public void save(Zoo zoo) {
 //        //TODO смотреть сюда для связи one-to-many
 //        zoo.getAnimalList().forEach(animal -> animal.setZoo(zoo));
 //        zooRepository.save(zoo);
 //    }
 
-}
 
 //    @Override
 //    public List<Vaucher> findVauchersByParam(VaucherType type, Double fromPrice, Double toPrice

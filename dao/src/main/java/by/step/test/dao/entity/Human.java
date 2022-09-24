@@ -22,7 +22,7 @@ public class Human {
     private Integer age;
 
     //===============================
-    @OneToMany(mappedBy = "human", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "human", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Vaucher> vaucherList;
 
 //-------------------------------

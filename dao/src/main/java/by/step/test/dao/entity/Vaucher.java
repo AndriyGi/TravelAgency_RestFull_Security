@@ -27,7 +27,7 @@ public class Vaucher {
     private Double vaucherFullPrice;
 
   //=================================================
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "human_id")
     private Human human;
 
