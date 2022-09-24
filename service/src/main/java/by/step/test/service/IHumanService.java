@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IHumanService {
 
-    List<Human> findAll();
+    List<Human> findAllHumans();
     Human save(Human human);
     void delete(Long id);
 

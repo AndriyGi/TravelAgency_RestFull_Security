@@ -17,7 +17,7 @@ public interface IHumanRepository extends JpaRepository<Human, Long> {
 
     @Transactional
     @Query(value = "SELECT * FROM Human", nativeQuery = true)
-    List<Human> findAll();
+    List<Human> findAllHumans();
 
     Human save(Human human);
 

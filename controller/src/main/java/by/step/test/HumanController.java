@@ -28,7 +28,7 @@ public class HumanController {
     @GetMapping("find_all")
     @Operation(summary = "Найти всех людей", description = "All clients of Agency")
     public List<Human> findAll() {
-        return humanService.findAll();
+        return humanService.findAllHumans();
     }
 
     @GetMapping("/{humanId}")

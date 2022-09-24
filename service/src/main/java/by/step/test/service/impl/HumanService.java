@@ -32,8 +32,8 @@ public class HumanService implements IHumanService {
     private VaucherMapper vaucherMapper;
 
     @Override
-    public List<Human> findAll() {
-        return humanRepository.findAll();
+    public List<Human> findAllHumans() {
+        return humanRepository.findAllHumans();
     }
 
     @Override
