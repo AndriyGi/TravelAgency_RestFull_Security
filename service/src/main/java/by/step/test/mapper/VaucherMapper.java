@@ -8,6 +8,8 @@ import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 
 @Mapper(unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE, componentModel = "spring")
@@ -15,6 +17,7 @@ public interface VaucherMapper {
 
     Vaucher vaucherDtoToVaucher(VaucherDto vaucherDto);
     VaucherDto vaucherToVaucherDto(Vaucher vaucher);
+//    List<Vaucher> listVaucherT
 
 //    @BeanMapping(nullValuePropertyMappingStrategy = IGNORE)
 //    Vaucher updateVaucherFromVaucherDto(VaucherDto vaucherDto, @MappingTarget Vaucher vaucher);

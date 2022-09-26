@@ -2,6 +2,8 @@ package by.step.test;
 
 import by.step.test.dao.entity.Human;
 import by.step.test.dto.HumanDto;
+import by.step.test.dto.VaucherDto;
+import by.step.test.exception.ServiceException;
 import by.step.test.service.IHumanService;
 import by.step.test.service.IVaucherService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,7 +19,7 @@ import java.util.List;
 public class HumanController {
 
     @Autowired
-    private IHumanService humanService;
+    private final IHumanService humanService;
     @Autowired
     private IVaucherService vaucherService;
 
@@ -25,21 +27,9 @@ public class HumanController {
         this.humanService = humanService;
     }
 
-    @GetMapping("find_all")
-    @Operation(summary = "Найти всех людей", description = "All clients of Agency")
-    public List<Human> findAll() {
-        return humanService.findAllHumans();
-    }
-
-    @GetMapping("/{humanId}")
-    @Operation(summary = "Найти по АйДи", description = "All clients of Agency")
-    public HumanDto findById(@PathVariable("humanId") Long id) {
-        return humanService.findById(id);
-    }
-
     @PostMapping
     @Operation(summary = "сохранить человека", description = "Добавляем человека")
-    public Human save(@RequestBody Human human) {
+    public HumanDto save(@RequestBody Human human) {
         return humanService.save(human);
     }
 
@@ -49,13 +39,25 @@ public class HumanController {
         humanService.delete(id);
     }
 
-//    @PutMapping("/attach_vauchers")
-//    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
-//            , description = "добавить путевку к человеку")
-//    public HumanDto attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
-//        HumanDto humanDto = vaucherService.attachVauchers_toHuman(humanDtoId, vaucherId);
-//        return humanDto;
+    @GetMapping("find_all")
+    @Operation(summary = "Найти всех людей", description = "All clients of Agency")
+    public List<HumanDto> findAll() {
+        return humanService.findAll();
+    }
+
+    @GetMapping("/{humanId}")
+    @Operation(summary = "Найти по АйДи", description = "All clients of Agency")
+    public HumanDto findById(@PathVariable("humanId") Long id) throws ServiceException {
+        return humanService.findById(id);
+    }
+
+//    @GetMapping("/findhumanbyvaucherid/{vaucherid}")
+//    @Operation(summary = "Найти человека по путевке ID"
+//            , description = "Найти человека по путевке ID")
+//    public HumanDto findHumanByVaucher_Id(@PathVariable("vaucherid") Long vaucherId){
+//        return humanService.findHumanByVaucherId(vaucherId);
 //    }
+
 
 //    @GetMapping("/filter")
 //    public List<Human> findAllByName(@RequestParam("name") String name) {
@@ -67,12 +69,5 @@ public class HumanController {
 //    public List<Human> findAllBySurnameAndAge(@RequestParam String surname, @RequestParam Integer age) {
 //        return humanService.findAllBySurnameAndAge(surname, age);
 //    }
-
-//    @PutMapping("/attach_vaucher")
-//    @Operation(summary = "добавить путевку к человеку", description = "добавить путевку к человеку")
-//    public Human attachVaucherToHuman(@RequestParam Long humanId,@RequestParam Long vaucherId){
-//        return humanService.attachVaucherToHuman(humanId, vaucherId);
-//    }
-
 
 }

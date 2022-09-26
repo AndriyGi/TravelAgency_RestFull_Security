@@ -49,31 +49,50 @@ public class VoucherController {
     @Autowired
     private VaucherServiceImpl vaucherServiceImpl;
 
+
     @PostMapping("/save")
-    public Vaucher save(@RequestBody Vaucher vaucher) {
+    public VaucherDto save(@RequestBody Vaucher vaucher) {
         return vaucherService.saveNewVaucher(vaucher);
     }
 
-    @DeleteMapping("/delete")
-    public Vaucher delete(@RequestBody Vaucher vaucher) {
-        return vaucherService.deleteVaucher(vaucher);
+    @DeleteMapping("/delete/{vaucherid}")
+    public void delete(@PathVariable("vaucherid") Long vaucherId) {
+        vaucherServiceImpl.deleteById(vaucherId);
     }
 
     @GetMapping("/allvauchers")
-    public List<Vaucher> getAllVauchers() {
-        return vaucherService.findAllVauchers();
+    public List<VaucherDto> getAllVauchers() {
+      return vaucherService.findAllVauchers();
     }
 
     @GetMapping("/findbyid")
-    public Vaucher findById(Long id) {
-        Vaucher vaucher = new Vaucher();
+    public VaucherDto findById(Long id) {
+        VaucherDto vaucherDto = new VaucherDto();
         try {
-            vaucher = vaucherService.findById(id);
+            vaucherDto = vaucherService.findById(id);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        return vaucher;
+        return vaucherDto;
     }
+//    @PutMapping("/attach_vauchers")
+//    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
+//            , description = "добавить путевку к человеку")
+//    public VaucherDto attachVaucherssToHuman(@RequestParam Long humanId
+//            , @RequestParam Long vaucherId) {
+//        VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(iVaucherService
+//                .attachVauchers_toHuman(humanId, vaucherId));
+//        return vaucherDto;
+//    }
+
+    @GetMapping("/findallvauchersbyhumanid/{humanid}")
+    @Operation(summary = "Найти ВСЕ путевки у 1 человека"
+            , description = "ВСЕ путевки  человека")
+    public List<VaucherDto> findAllByHuman_Id(@PathVariable("humanid") Long humanId){
+        List<VaucherDto> vaucherDtoList = vaucherService.findAllVauchersByHuman_Id(humanId);
+        return  vaucherDtoList;
+    }
+
 
 //    @PutMapping("/attach_vauchers")
 //    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
@@ -83,14 +102,17 @@ public class VoucherController {
 //        return integer;
 //    }
 //
-    @PutMapping("/attach_vauchers")
-    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
-            , description = "добавить путевку к человеку")
-    public VaucherDto attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
-        return vaucherMapper.vaucherToVaucherDto(
-                vaucherServiceImpl.attachVauchers_toHuman(humanId, vaucherId)
-        );
-    }
+//    @PutMapping("/attach_vauchers")
+//    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
+//            , description = "добавить путевку к человеку")
+//    public VaucherDto attachVauchersToHuman(@RequestParam Long humanId, @RequestParam Long vaucherId) {
+//        return vaucherMapper.vaucherToVaucherDto(
+//                vaucherServiceImpl.attachVauchers_toHuman(humanId, vaucherId)
+//        );
+//    }
+
+
+
 
 //    @GetMapping("/calcvaucherprice")
 //    public double calculateVaucherPrice(Vaucher vaucher) {

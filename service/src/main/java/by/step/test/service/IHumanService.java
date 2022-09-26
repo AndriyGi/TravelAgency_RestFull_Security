@@ -2,17 +2,19 @@ package by.step.test.service;
 
 import by.step.test.dao.entity.Human;
 import by.step.test.dto.HumanDto;
+import by.step.test.exception.ServiceException;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 public interface IHumanService {
 
-    List<Human> findAllHumans();
-    Human save(Human human);
+    List<HumanDto> findAll();
+    HumanDto save(Human human);
     void delete(Long id);
+    HumanDto findById(Long id) throws ServiceException;
 
-    HumanDto findById(Long id);
+//    HumanDto findHumanByVaucherId(Long id);
 
 //    HumanDto attachVauchers_toHuman(Long humanId,Long vaucherId);
 

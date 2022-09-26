@@ -6,19 +6,18 @@ import by.step.test.dao.repository.IHumanRepository;
 import by.step.test.dao.repository.IVaucherRepository;
 import by.step.test.dto.HumanDto;
 import by.step.test.dto.VaucherDto;
-import by.step.test.exception.EntityNotFoundException;
 import by.step.test.exception.ServiceException;
 import by.step.test.mapper.HumanMapper;
 import by.step.test.mapper.VaucherMapper;
 import by.step.test.service.IVaucherService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -42,35 +41,52 @@ public class VaucherServiceImpl implements IVaucherService {
 
 
     @Override
-    public List<Vaucher> findAllVauchers() {
-        return vaucherRepository.findAll();
+    public VaucherDto saveNewVaucher(Vaucher vaucher) {
+        double calculatedVaucherPrice = vaucher.getPriceOneDay() * vaucher.getDays();
+        vaucher.setVaucherFullPrice(calculatedVaucherPrice);
+        Vaucher vaucherSaved = vaucherRepository.saveAndFlush(vaucher);
+        return vaucherMapper.vaucherToVaucherDto(vaucherSaved) ;
+    }
+    @Override
+    public void deleteById(Long id) {
+        vaucherRepository.deleteById(id);
+
+//       Vaucher vaucherToDelete = vaucherRepository.findById(id).get();
+//       VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto
+//               (vaucherRepository.(id));
+
+    }
+    @Override
+    public List<VaucherDto> findAllVauchers() {
+        List<Vaucher> vaucherList = vaucherRepository.findAll();
+        List<VaucherDto> vaucherDtoList = new ArrayList<>();
+        for (Vaucher vaucher : vaucherList) {
+           VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucher);
+            vaucherDtoList.add(vaucherDto);
+        }
+        return vaucherDtoList;
     }
 
     @Override
-    public Vaucher findById(Long id) throws ServiceException {
+    public VaucherDto findById(Long id) throws ServiceException {
         Optional<Vaucher> vaucherOptional = vaucherRepository.findById(id);
         if (vaucherOptional.isPresent()) {
-            return vaucherOptional.get();
+             VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucherOptional.get());
+             return vaucherDto;
         } else {
             throw new ServiceException("объект по ID не найден");
         }
     }
-
-    @Override
-    public Vaucher saveNewVaucher(Vaucher vaucher) {
-        double calculatedVaucherPrice = vaucher.getPriceOneDay() * vaucher.getDays();
-        vaucher.setVaucherFullPrice(calculatedVaucherPrice);
-        Vaucher vaucherSaved = vaucherRepository.saveAndFlush(vaucher);
-        return vaucherSaved;
+    public List<VaucherDto> findAllVauchersByHuman_Id(Long humanId) {
+        List<Vaucher> vaucherListHumanId = vaucherRepository.findallbyhumanId(humanId);
+        List<VaucherDto> vaucherDtoList = vaucherListHumanId.stream().map(
+                v->vaucherMapper.vaucherToVaucherDto(v)).collect(Collectors.toList());
+        return vaucherDtoList;
     }
+}
 
-    @Override
-    public Vaucher deleteVaucher(Vaucher vaucher) {
-        vaucherRepository.delete(vaucher);
-        return vaucher;
-    }
 
-    //          ПРИСВОЕНИЕ  через метод СКЛ запроса в репозитории ваучера
+    //    TODO      ПРИСВОЕНИЕ  через метод СКЛ запроса - в репозитории ваучера
 //    @Override
 //    public Integer attachVauchers_toHuman(Long humanId, Long vaucherId) {
 //        return vaucherRepository.attachVaucherss_toHuman(humanId, vaucherId);
@@ -78,18 +94,18 @@ public class VaucherServiceImpl implements IVaucherService {
 
 
     //    @Override
-    public Vaucher attachVauchers_toHuman(Long humanId, Long vaucherId) {
-        Human human = humanRepository.findById(humanId)
-                .orElseThrow(EntityNotFoundException::new);
-        Vaucher vaucher = vaucherRepository.findById(vaucherId)
-                .orElseThrow(EntityNotFoundException::new);
+//    public Vaucher attachVauchers_toHuman(Long humanId, Long vaucherId) {
+//        Human human = humanRepository.findById(humanId)
+//                .orElseThrow(EntityNotFoundException::new);
+//        Vaucher vaucher = vaucherRepository.findById(vaucherId)
+//                .orElseThrow(EntityNotFoundException::new);
+//        vaucher.setHuman(human);
+//        vaucherRepository.saveAndFlush(vaucher);
+//        return vaucher;
+//    }
 
-        List<Vaucher> vaucherList = human.getVaucherList();
-        human.getVaucherList().forEach(vaucher1 -> vaucher.setHuman(human));
-        vaucherRepository.saveAndFlush(vaucher);
-        return vaucher;
-    }
-}
+
+
 
 //    public void save(Zoo zoo) {
 //        //TODO смотреть сюда для связи one-to-many
