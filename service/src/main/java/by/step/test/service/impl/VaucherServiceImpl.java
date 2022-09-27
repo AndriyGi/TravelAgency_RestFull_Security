@@ -6,6 +6,7 @@ import by.step.test.dao.repository.IHumanRepository;
 import by.step.test.dao.repository.IVaucherRepository;
 import by.step.test.dto.HumanDto;
 import by.step.test.dto.VaucherDto;
+import by.step.test.exception.EntityNotFoundException;
 import by.step.test.exception.ServiceException;
 import by.step.test.mapper.HumanMapper;
 import by.step.test.mapper.VaucherMapper;
@@ -45,8 +46,9 @@ public class VaucherServiceImpl implements IVaucherService {
         double calculatedVaucherPrice = vaucher.getPriceOneDay() * vaucher.getDays();
         vaucher.setVaucherFullPrice(calculatedVaucherPrice);
         Vaucher vaucherSaved = vaucherRepository.saveAndFlush(vaucher);
-        return vaucherMapper.vaucherToVaucherDto(vaucherSaved) ;
+        return vaucherMapper.vaucherToVaucherDto(vaucherSaved);
     }
+
     @Override
     public void deleteById(Long id) {
         vaucherRepository.deleteById(id);
@@ -56,12 +58,13 @@ public class VaucherServiceImpl implements IVaucherService {
 //               (vaucherRepository.(id));
 
     }
+
     @Override
     public List<VaucherDto> findAllVauchers() {
         List<Vaucher> vaucherList = vaucherRepository.findAll();
         List<VaucherDto> vaucherDtoList = new ArrayList<>();
         for (Vaucher vaucher : vaucherList) {
-           VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucher);
+            VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucher);
             vaucherDtoList.add(vaucherDto);
         }
         return vaucherDtoList;
@@ -71,42 +74,42 @@ public class VaucherServiceImpl implements IVaucherService {
     public VaucherDto findById(Long id) throws ServiceException {
         Optional<Vaucher> vaucherOptional = vaucherRepository.findById(id);
         if (vaucherOptional.isPresent()) {
-             VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucherOptional.get());
-             return vaucherDto;
+            VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucherOptional.get());
+            return vaucherDto;
         } else {
             throw new ServiceException("объект по ID не найден");
         }
     }
+
     public List<VaucherDto> findAllVauchersByHuman_Id(Long humanId) {
-       Human human = humanRepository.findById(humanId).get();
+        Human human = humanRepository.findById(humanId).get();
         List<Vaucher> vaucherList = human.getVaucherList();
 
         List<VaucherDto> vaucherDtoList = vaucherList.stream().map(
-                v->vaucherMapper.vaucherToVaucherDto(v)).collect(Collectors.toList());
+                v -> vaucherMapper.vaucherToVaucherDto(v)).collect(Collectors.toList());
+        return vaucherDtoList;
+    }
+
+
+    @Override
+    public List<VaucherDto> attachVauchers_toHuman(Long humanId, Long vaucherId) {
+        Human human = humanRepository.findById(humanId)
+                .orElseThrow(EntityNotFoundException::new);
+        Vaucher vaucher = vaucherRepository.findById(vaucherId)
+                .orElseThrow(EntityNotFoundException::new);
+        List<Vaucher> vaucherList = human.getVaucherList();
+        vaucherList.add(vaucher);
+        List<VaucherDto> vaucherDtoList = vaucherList.stream().map(
+                v -> vaucherMapper.vaucherToVaucherDto(v)).collect(Collectors.toList());
         return vaucherDtoList;
     }
 }
 
-
-    //    TODO      ПРИСВОЕНИЕ  через метод СКЛ запроса - в репозитории ваучера
+//    TODO      ПРИСВОЕНИЕ  через метод СКЛ запроса - в репозитории ваучера
 //    @Override
 //    public Integer attachVauchers_toHuman(Long humanId, Long vaucherId) {
 //        return vaucherRepository.attachVaucherss_toHuman(humanId, vaucherId);
 //    }
-
-
-    //    @Override
-//    public Vaucher attachVauchers_toHuman(Long humanId, Long vaucherId) {
-//        Human human = humanRepository.findById(humanId)
-//                .orElseThrow(EntityNotFoundException::new);
-//        Vaucher vaucher = vaucherRepository.findById(vaucherId)
-//                .orElseThrow(EntityNotFoundException::new);
-//        vaucher.setHuman(human);
-//        vaucherRepository.saveAndFlush(vaucher);
-//        return vaucher;
-//    }
-
-
 
 
 //    public void save(Zoo zoo) {

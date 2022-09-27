@@ -75,15 +75,14 @@ public class VoucherController {
         }
         return vaucherDto;
     }
-//    @PutMapping("/attach_vauchers")
-//    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
-//            , description = "добавить путевку к человеку")
-//    public VaucherDto attachVaucherssToHuman(@RequestParam Long humanId
-//            , @RequestParam Long vaucherId) {
-//        VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(iVaucherService
-//                .attachVauchers_toHuman(humanId, vaucherId));
-//        return vaucherDto;
-//    }
+    @PutMapping("/attach_vauchers")
+    @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
+            , description = "добавить путевку к человеку")
+    public List<VaucherDto> attachVaucherssToHuman(@RequestParam Long humanId
+            , @RequestParam Long vaucherId) {
+        List<VaucherDto> vaucherDtoList = vaucherService.attachVauchers_toHuman(humanId,vaucherId);
+      return vaucherDtoList;
+    }
 
     @GetMapping("/findallvauchersbyhumanid/{humanid}")
     @Operation(summary = "Найти ВСЕ путевки у 1 человека"

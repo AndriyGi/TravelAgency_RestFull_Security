@@ -16,13 +16,14 @@ import java.util.List;
 @Getter
 @Setter
 public class Vaucher {
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER,    cascade = CascadeType.PERSIST)
     @JoinTable(name = "link_human_vaucher",
             joinColumns = @JoinColumn(name = "vaucher_id"),
             inverseJoinColumns = @JoinColumn(name = "human_id"),
             foreignKey = @ForeignKey(name = "fk_vaucher_to_human")
     )
     private List<Human> humanList;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,11 +41,11 @@ public class Vaucher {
     @Column(name = "vfullprice")
     private Double vaucherFullPrice;
 
+    @ManyToMany(mappedBy = "vaucherList")
+    private List<Human> human = new ArrayList<>();
 
 
-
-
-  //=================================================
+    //=================================================
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "human_id")
 //    private Human human;

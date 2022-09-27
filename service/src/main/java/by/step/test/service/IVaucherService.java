@@ -17,7 +17,7 @@ public interface IVaucherService {
 
 //     void save(Vaucher vaucher);
 
-//    Vaucher attachVauchers_toHuman(Long humanId, Long vaucherId);
+    List<VaucherDto> attachVauchers_toHuman(Long humanId, Long vaucherId);
 
 
 

@@ -1,5 +1,7 @@
 package by.step.test.dao.entity;
+
 import lombok.*;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +10,11 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Human {
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "link_human_vaucher",
             joinColumns = @JoinColumn(name = "human_id"),
@@ -33,7 +37,6 @@ public class Human {
     private Integer age;
 
 
-
 //    @JoinTable(
 //            name = "link_driver_car",
 //            joinColumns = @JoinColumn(name = "car_id"),
@@ -53,8 +56,6 @@ public class Human {
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "vaucher_id")
 //    private Vaucher vaucher;
-
-
 
 
 }
