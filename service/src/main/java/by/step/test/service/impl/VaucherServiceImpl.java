@@ -78,8 +78,10 @@ public class VaucherServiceImpl implements IVaucherService {
         }
     }
     public List<VaucherDto> findAllVauchersByHuman_Id(Long humanId) {
-        List<Vaucher> vaucherListHumanId = vaucherRepository.findallbyhumanId(humanId);
-        List<VaucherDto> vaucherDtoList = vaucherListHumanId.stream().map(
+       Human human = humanRepository.findById(humanId).get();
+        List<Vaucher> vaucherList = human.getVaucherList();
+
+        List<VaucherDto> vaucherDtoList = vaucherList.stream().map(
                 v->vaucherMapper.vaucherToVaucherDto(v)).collect(Collectors.toList());
         return vaucherDtoList;
     }

@@ -21,11 +21,14 @@ public interface IVaucherRepository extends JpaRepository<Vaucher, Long> {
 //    Integer attachVaucherss_toHuman(@Param("humanId") Long humanId
 //            , @Param("vaucherId") Long vaucherId);
 
-    List<Vaucher> findallbyhumanId(Long humanId);
 
-    void deleteById(Long id);
+//    -----------------------------
 
+//    List<Vaucher> findallbyhumanId(Long humanId);
+//
+//    void deleteById(Long id);
 
+//-----------------------------------
 
 
 //    List<Vaucher> findAllVauchers();
