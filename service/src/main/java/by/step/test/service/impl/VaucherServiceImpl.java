@@ -97,8 +97,15 @@ public class VaucherServiceImpl implements IVaucherService {
                 .orElseThrow(EntityNotFoundException::new);
         Vaucher vaucher = vaucherRepository.findById(vaucherId)
                 .orElseThrow(EntityNotFoundException::new);
+
         List<Vaucher> vaucherList = human.getVaucherList();
         vaucherList.add(vaucher);
+        human.setVaucherList(vaucherList);
+
+        List<Human> humanList = vaucher.getHumanList();
+        humanList.add(human);
+        vaucher.setHumanList(humanList);
+
         List<VaucherDto> vaucherDtoList = vaucherList.stream().map(
                 v -> vaucherMapper.vaucherToVaucherDto(v)).collect(Collectors.toList());
         return vaucherDtoList;
