@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Vaucher {
-    @ManyToMany(fetch = FetchType.EAGER,    cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "link_human_vaucher",
             joinColumns = @JoinColumn(name = "vaucher_id"),
             inverseJoinColumns = @JoinColumn(name = "human_id"),

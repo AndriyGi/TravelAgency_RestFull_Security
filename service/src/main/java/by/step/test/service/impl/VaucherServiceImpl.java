@@ -95,6 +95,9 @@ public class VaucherServiceImpl implements IVaucherService {
     public List<VaucherDto> attachVauchers_toHuman(Long humanId, Long vaucherId) {
         Human human = humanRepository.findById(humanId)
                 .orElseThrow(EntityNotFoundException::new);
+//        List.forEach(System.out::println);
+//        List.forEach(n-> System.out.println(n));
+
         Vaucher vaucher = vaucherRepository.findById(vaucherId)
                 .orElseThrow(EntityNotFoundException::new);
 
