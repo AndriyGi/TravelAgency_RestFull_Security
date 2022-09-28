@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Human {
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "link_human_vaucher",
             joinColumns = @JoinColumn(name = "human_id"),

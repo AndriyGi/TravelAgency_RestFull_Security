@@ -17,7 +17,8 @@ import java.util.List;
 @Getter
 @Setter
 public class Vaucher {
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "link_human_vaucher",
             joinColumns = @JoinColumn(name = "vaucher_id"),
             inverseJoinColumns = @JoinColumn(name = "human_id"),

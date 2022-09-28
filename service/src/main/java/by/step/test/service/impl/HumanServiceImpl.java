@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class HumanServiceImpl implements IHumanService {
@@ -32,8 +33,7 @@ public class HumanServiceImpl implements IHumanService {
     private HumanMapper humanMapper;
     @Autowired
     private VaucherMapper vaucherMapper;
-    private Vaucher vaucher;
-    private Human human;
+
 
     @Override
     public HumanDto save(Human human) {
@@ -51,8 +51,8 @@ public class HumanServiceImpl implements IHumanService {
         List<HumanDto> humanDtoList = new ArrayList<>();
         List<Human> humanListAll = humanRepository.findAll();
         for (Human human1 : humanListAll) {
-           HumanDto humanDto = humanMapper.humanToHumanDto(human1);
-           humanDtoList.add(humanDto);
+            HumanDto humanDto = humanMapper.humanToHumanDto(human1);
+            humanDtoList.add(humanDto);
         }
         return humanDtoList;
     }
@@ -60,12 +60,27 @@ public class HumanServiceImpl implements IHumanService {
     @Override
     public HumanDto findById(Long id) throws ServiceException {
         Optional<Human> humanOpt = humanRepository.findById(id);
-        if(humanOpt.isPresent()){
-            return  humanMapper.humanToHumanDto(humanOpt.get());
-        }else{
+        if (humanOpt.isPresent()) {
+            return humanMapper.humanToHumanDto(humanOpt.get());
+        } else {
             throw new ServiceException("объект по ID не найден");
         }
     }
+
+    @Override
+    public List<HumanDto> findAllHumansByVaucher_Id(Long vaucherId) {
+        Optional<Vaucher> vaucherOptional = vaucherRepository.findById(vaucherId);
+        if (vaucherOptional.isPresent()) {
+            Vaucher vaucher = vaucherOptional.get();
+            List<Human> humanList = vaucher.getHumanList();
+            List<HumanDto> humanDtoList = humanList.stream().map(
+                    human -> humanMapper.humanToHumanDto(human)).collect(Collectors.toList());
+            return humanDtoList;
+        } else {
+            throw new EntityNotFoundException("Vaucher not found by ID");
+        }
+    }
+}
 
 //    @Override
 //    public HumanDto findHumanByVaucherId(Long id) {
@@ -75,14 +90,14 @@ public class HumanServiceImpl implements IHumanService {
 //    }
 
 
-    //    @Override
+        //    @Override
 //    public HumanDto attachVauchers_toHuman(Long humanId, Long vaucherId) {
 //        Human human = humanRepository.attachVauchers_toHuman(humanId, vaucherId);
 //        HumanDto humanDto = humanConverter.fromHumanToHumanDto(human);
 //        return humanDto;
 //    }
 
-    //    @Override
+        //    @Override
 //    public Human attachVaucherToHuman(Long humanId, Long vaucherId) {
 //        Human human = humanRepository.findById(humanId)
 //                .orElseThrow(EntityNotFoundException::new);
@@ -103,5 +118,3 @@ public class HumanServiceImpl implements IHumanService {
 //        return humanRepository.findAllBySurnameAndAge(surname, age);
 //    }
 
-
-}

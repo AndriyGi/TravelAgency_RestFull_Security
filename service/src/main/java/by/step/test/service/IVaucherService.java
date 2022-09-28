@@ -14,10 +14,10 @@ public interface IVaucherService {
     void deleteById (Long id);
     List<VaucherDto> findAllVauchersByHuman_Id(Long humanId);
 
-
+    List<VaucherDto> attachVauchers_toHuman(Long humanId, Long vaucherId);
 //     void save(Vaucher vaucher);
 
-    List<VaucherDto> attachVauchers_toHuman(Long humanId, Long vaucherId);
+
 
 
 

@@ -51,6 +51,13 @@ public class HumanController {
         return humanService.findById(id);
     }
 
+    @GetMapping("/findallhumansbyvaucherid/{vaucherid}")
+    @Operation(summary = "Найти ВСЕХ ЛЮДЕЙ по АйДи путевки"
+            , description = "Найти ВСЕХ Л по АйДи П")
+    public List<HumanDto> findAllHumansByVaucher_Id(@PathVariable("vaucherid") Long vaucherId) {
+        return humanService.findAllHumansByVaucher_Id(vaucherId);
+    }
+
 //    @GetMapping("/findhumanbyvaucherid/{vaucherid}")
 //    @Operation(summary = "Найти человека по путевке ID"
 //            , description = "Найти человека по путевке ID")

@@ -4,11 +4,9 @@ import by.step.test.dao.entity.Human;
 import by.step.test.dao.entity.Vaucher;
 import by.step.test.dao.repository.IHumanRepository;
 import by.step.test.dao.repository.IVaucherRepository;
-import by.step.test.dto.HumanDto;
 import by.step.test.dto.VaucherDto;
 import by.step.test.exception.EntityNotFoundException;
 import by.step.test.exception.ServiceException;
-import by.step.test.mapper.HumanMapper;
 import by.step.test.mapper.VaucherMapper;
 import by.step.test.service.IVaucherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +27,7 @@ public class VaucherServiceImpl implements IVaucherService {
     private IVaucherRepository vaucherRepository;
     @Autowired
     private IHumanRepository humanRepository;
-    private Human human;
-    private Vaucher vaucher;
-    @Autowired
-    private VaucherDto vaucherDto;
-    @Autowired
-    private HumanDto humanDto;
-    @Autowired
-    private HumanMapper humanMapper;
+
     @Autowired
     private VaucherMapper vaucherMapper;
 
@@ -84,30 +75,40 @@ public class VaucherServiceImpl implements IVaucherService {
     public List<VaucherDto> findAllVauchersByHuman_Id(Long humanId) {
         Human human = humanRepository.findById(humanId).get();
         List<Vaucher> vaucherList = human.getVaucherList();
-
         List<VaucherDto> vaucherDtoList = vaucherList.stream().map(
                 v -> vaucherMapper.vaucherToVaucherDto(v)).collect(Collectors.toList());
         return vaucherDtoList;
     }
 
+//    public static void main(String[] args)  {
+//        Human human = null;
+////        Human human = new Human();
+//        Optional<Human> humanOptional = Optional.ofNullable(human);
+//        try {
+//            run(humanOptional);
+//            System.out.println("ttt");
+//        } catch (RuntimeException customEntityNotFoundExc) {
+//            customEntityNotFoundExc.printStackTrace();
+//        }
+//    }
+//
+//    private static void run(Optional<Human> humanOptional)  {
+//        if(humanOptional.isEmpty()){
+//            throw new EntityNotFoundException("message");
+//        }
+//    }
 
     @Override
     public List<VaucherDto> attachVauchers_toHuman(Long humanId, Long vaucherId) {
         Human human = humanRepository.findById(humanId)
                 .orElseThrow(EntityNotFoundException::new);
-//        List.forEach(System.out::println);
-//        List.forEach(n-> System.out.println(n));
-
         Vaucher vaucher = vaucherRepository.findById(vaucherId)
                 .orElseThrow(EntityNotFoundException::new);
 
         List<Vaucher> vaucherList = human.getVaucherList();
         vaucherList.add(vaucher);
         human.setVaucherList(vaucherList);
-
-        List<Human> humanList = vaucher.getHumanList();
-        humanList.add(human);
-        vaucher.setHumanList(humanList);
+        vaucherRepository.saveAndFlush(vaucher);
 
         List<VaucherDto> vaucherDtoList = vaucherList.stream().map(
                 v -> vaucherMapper.vaucherToVaucherDto(v)).collect(Collectors.toList());
