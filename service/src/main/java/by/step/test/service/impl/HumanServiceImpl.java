@@ -6,22 +6,26 @@ import by.step.test.dao.entity.Vaucher;
 import by.step.test.dao.repository.IHumanRepository;
 import by.step.test.dao.repository.IVaucherRepository;
 import by.step.test.dto.HumanDto;
-import by.step.test.dto.VaucherDto;
-import by.step.test.exception.EntityNotFoundException;
-import by.step.test.exception.ServiceException;
+//import by.step.test.exception.EntityNotFoundException;
+import by.step.test.exception.ExcEmptyHumansList;
+import by.step.test.exception.ExcHumanIsPresent;
+import by.step.test.exception.ExcVaucherNotFound;
+import by.step.test.exception.ExcHumanNotFound;
 import by.step.test.mapper.HumanMapper;
 import by.step.test.mapper.VaucherMapper;
 import by.step.test.service.IHumanService;
-import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class HumanServiceImpl implements IHumanService {
     @Autowired
     private HumanConverter humanConverter;
@@ -33,42 +37,85 @@ public class HumanServiceImpl implements IHumanService {
     private HumanMapper humanMapper;
     @Autowired
     private VaucherMapper vaucherMapper;
+    private Object Comparator;
+    private Object Human;
+    private Object List;
+
 
 
     @Override
-    public HumanDto save(Human human) {
+    public boolean existByEmail(String mail) {
+       Optional<Human> human = humanRepository.findByMail(mail);
+        return human.isPresent();
+    }
+
+    @Override
+    public HumanDto save(Human human) throws ExcHumanIsPresent {
+        log.info("SERVICE -- exstracting ALL HUMANs LIST  from REPOSITORY ");
+        List<Human> humanList = humanRepository.findAll();
+//        log.info(" checking FOR EMPTY LIST ");
+//        if (humanList.isEmpty()) {
+//            log.info(" IF Its empty list - THROW EXC-on  ");
+//            throw new ExcEmptyHumansList("Its empty list");
+//        }
+        log.info(" SERVICE - Проверка на наличие такого Хуман в БД ");
+        boolean result = humanList.stream()
+                .anyMatch(human1 ->
+                        human1.getName().equals(human.getName())
+                                &&
+                                human1.getSurname().equals(human.getSurname()));
+        log.info("SERVICE -- if RESULT ");
+        if (result) {
+            throw new ExcHumanIsPresent(" Human IS- HEAR - in OUR DB  !!!");
+        }
+        log.info("SERVICE -- HUMANDTO MAPPING ------");
         HumanDto humanDto = humanMapper.humanToHumanDto(humanRepository.save(human));
+        log.info(" SERVICE  -  new  Human was SAVED in DB !!!");
         return humanDto;
     }
 
     @Override
-    public void delete(Long id) {
-        humanRepository.deleteById(id);
+    public HumanDto findById(Long id) throws ExcHumanNotFound {
+        log.info("TRY to find Human(OPTIONAL");
+        Optional<Human> humanOpt = humanRepository.findById(id);
+        log.info("CHECKING if Human is present ??  ");
+        if (humanOpt.isPresent()) {
+            log.info("HUMAN FOUNDED !! - returning -humanDto - see !! ");
+            return humanMapper.humanToHumanDto(humanOpt.get());
+        } else {
+            ExcHumanNotFound excHumanNotFound = new ExcHumanNotFound();
+            log.error(excHumanNotFound.getMessage("HUMAN NOT FOUND by ID !!!")
+                    , excHumanNotFound);
+            throw new ExcHumanNotFound("Human not foud by id");
+        }
     }
 
     @Override
-    public List<HumanDto> findAll() {
+    public Long delete(Long id) {
+        humanRepository.deleteById(id);
+        return id;
+    }
+
+    @Override
+    public List<HumanDto> findAll() throws ExcEmptyHumansList {
         List<HumanDto> humanDtoList = new ArrayList<>();
         List<Human> humanListAll = humanRepository.findAll();
+        try {
+            log.info("TRY to find ALL Humans");
+            humanListAll = humanRepository.findAll();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
         for (Human human1 : humanListAll) {
             HumanDto humanDto = humanMapper.humanToHumanDto(human1);
             humanDtoList.add(humanDto);
         }
+        log.info("All Humans retrieved !! ");
         return humanDtoList;
     }
 
     @Override
-    public HumanDto findById(Long id) throws ServiceException {
-        Optional<Human> humanOpt = humanRepository.findById(id);
-        if (humanOpt.isPresent()) {
-            return humanMapper.humanToHumanDto(humanOpt.get());
-        } else {
-            throw new ServiceException("объект по ID не найден");
-        }
-    }
-
-    @Override
-    public List<HumanDto> findAllHumansByVaucher_Id(Long vaucherId) {
+    public List<HumanDto> findAllHumansByVaucher_Id(Long vaucherId) throws ExcVaucherNotFound {
         Optional<Vaucher> vaucherOptional = vaucherRepository.findById(vaucherId);
         if (vaucherOptional.isPresent()) {
             Vaucher vaucher = vaucherOptional.get();
@@ -77,9 +124,10 @@ public class HumanServiceImpl implements IHumanService {
                     human -> humanMapper.humanToHumanDto(human)).collect(Collectors.toList());
             return humanDtoList;
         } else {
-            throw new EntityNotFoundException("Vaucher not found by ID");
+            throw new ExcVaucherNotFound("Vaucher not found by ID");
         }
     }
+
 }
 
 //    @Override
@@ -90,14 +138,14 @@ public class HumanServiceImpl implements IHumanService {
 //    }
 
 
-        //    @Override
+//    @Override
 //    public HumanDto attachVauchers_toHuman(Long humanId, Long vaucherId) {
 //        Human human = humanRepository.attachVauchers_toHuman(humanId, vaucherId);
 //        HumanDto humanDto = humanConverter.fromHumanToHumanDto(human);
 //        return humanDto;
 //    }
 
-        //    @Override
+//    @Override
 //    public Human attachVaucherToHuman(Long humanId, Long vaucherId) {
 //        Human human = humanRepository.findById(humanId)
 //                .orElseThrow(EntityNotFoundException::new);

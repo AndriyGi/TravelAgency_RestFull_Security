@@ -1,11 +1,12 @@
 package by.step.test.dao.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.ArrayList;
+
 import java.util.List;
 
+//@Table(name = "human",uniqueConstraints
+// = {@UniqueConstraint(columnNames = {"name","surname"})})
 @Table(name = "human")
 @Entity
 @Getter
@@ -23,6 +24,11 @@ public class Human {
     )
     private List<Vaucher> vaucherList;
 
+    @ManyToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name = "human_role",  joinColumns = @JoinColumn("human_id")
+            , inverseJoinColumns = @JoinColumn ("role_id"))
+    private  List<Role> roleList;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,6 +41,15 @@ public class Human {
     @Basic
     @Column(name = "age")
     private Integer age;
+
+    private String mail;
+    private String pass;
+
+
+
+
+
+
 
 
 //    @JoinTable(

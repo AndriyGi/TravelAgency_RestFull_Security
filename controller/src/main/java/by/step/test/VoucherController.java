@@ -1,14 +1,12 @@
 package by.step.test;
 
-import by.step.test.dao.entity.Human;
 import by.step.test.dao.entity.Vaucher;
-import by.step.test.dao.repository.IHumanRepository;
-import by.step.test.dao.repository.IVaucherRepository;
-import by.step.test.dto.HumanDto;
 import by.step.test.dto.VaucherDto;
-import by.step.test.exception.ServiceException;
-import by.step.test.mapper.HumanMapper;
-import by.step.test.mapper.VaucherMapper;
+import by.step.test.excemption.ControllerExcemtion;
+import by.step.test.exception.ExcEmptyVaucherList;
+import by.step.test.exception.ExcHumanNotFound;
+import by.step.test.exception.ExcHumanOrVaucherNotExist;
+import by.step.test.exception.ExcVaucherNotFound;
 import by.step.test.service.IVaucherService;
 import by.step.test.service.impl.VaucherServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,23 +27,6 @@ public class VoucherController {
 
     @Autowired
     private IVaucherService vaucherService;
-
-    @Autowired
-    private IVaucherRepository vaucherRepository;
-    @Autowired
-    private IHumanRepository humanRepository;
-
-    private Human human;
-    private Vaucher vaucher;
-    @Autowired
-    private VaucherDto vaucherDto;
-
-    @Autowired
-    private HumanDto humanDto;
-    @Autowired
-    private HumanMapper humanMapper;
-    @Autowired
-    private VaucherMapper vaucherMapper;
     @Autowired
     private VaucherServiceImpl vaucherServiceImpl;
 
@@ -62,34 +43,29 @@ public class VoucherController {
 
     @GetMapping("/allvauchers")
     public List<VaucherDto> getAllVauchers() {
-      return vaucherService.findAllVauchers();
+        return vaucherService.findAllVauchers();
     }
 
     @GetMapping("/findbyid")
-    public VaucherDto findById(Long id) {
-        VaucherDto vaucherDto = new VaucherDto();
-        try {
-            vaucherDto = vaucherService.findById(id);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-        return vaucherDto;
+    public VaucherDto findById(Long id) throws ExcVaucherNotFound {
+        return vaucherService.findById(id);
     }
+
     @PutMapping("/attach_vauchers")
     @Operation(summary = "ДОБАВИТЬ путевки(несколько) к человеку"
             , description = "добавить путевку к человеку")
     public List<VaucherDto> attachVaucherssToHuman(@RequestParam Long humanId
-            , @RequestParam Long vaucherId) {
+            , @RequestParam Long vaucherId) throws ExcVaucherNotFound{
         List<VaucherDto> vaucherDtoList = vaucherService.attachVauchers_toHuman(humanId,vaucherId);
-      return vaucherDtoList;
+        return vaucherDtoList;
     }
 
     @GetMapping("/findallvauchersbyhumanid/{humanid}")
     @Operation(summary = "Найти ВСЕ путевки у 1 человека"
             , description = "ВСЕ путевки  человека")
-    public List<VaucherDto> findAllByHuman_Id(@PathVariable("humanid") Long humanId){
+    public List<VaucherDto> findAllByHuman_Id(@PathVariable("humanid") Long humanId) {
         List<VaucherDto> vaucherDtoList = vaucherService.findAllVauchersByHuman_Id(humanId);
-        return  vaucherDtoList;
+        return vaucherDtoList;
     }
 
 
@@ -109,8 +85,6 @@ public class VoucherController {
 //                vaucherServiceImpl.attachVauchers_toHuman(humanId, vaucherId)
 //        );
 //    }
-
-
 
 
 //    @GetMapping("/calcvaucherprice")

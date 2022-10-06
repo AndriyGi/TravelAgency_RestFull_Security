@@ -5,14 +5,15 @@ import by.step.test.dao.entity.Vaucher;
 import by.step.test.dao.repository.IHumanRepository;
 import by.step.test.dao.repository.IVaucherRepository;
 import by.step.test.dto.VaucherDto;
-import by.step.test.exception.EntityNotFoundException;
-import by.step.test.exception.ServiceException;
+import by.step.test.exception.*;
+
 import by.step.test.mapper.VaucherMapper;
 import by.step.test.service.IVaucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +28,8 @@ public class VaucherServiceImpl implements IVaucherService {
     private IVaucherRepository vaucherRepository;
     @Autowired
     private IHumanRepository humanRepository;
-
     @Autowired
     private VaucherMapper vaucherMapper;
-
 
     @Override
     public VaucherDto saveNewVaucher(Vaucher vaucher) {
@@ -43,10 +42,6 @@ public class VaucherServiceImpl implements IVaucherService {
     @Override
     public void deleteById(Long id) {
         vaucherRepository.deleteById(id);
-
-//       Vaucher vaucherToDelete = vaucherRepository.findById(id).get();
-//       VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto
-//               (vaucherRepository.(id));
 
     }
 
@@ -62,13 +57,13 @@ public class VaucherServiceImpl implements IVaucherService {
     }
 
     @Override
-    public VaucherDto findById(Long id) throws ServiceException {
+    public VaucherDto findById(Long id) throws ExcVaucherNotFound {
         Optional<Vaucher> vaucherOptional = vaucherRepository.findById(id);
         if (vaucherOptional.isPresent()) {
             VaucherDto vaucherDto = vaucherMapper.vaucherToVaucherDto(vaucherOptional.get());
             return vaucherDto;
         } else {
-            throw new ServiceException("объект по ID не найден");
+            throw new ExcVaucherNotFound("ВАУЧЕР по ID НЕ найден");
         }
     }
 
@@ -80,30 +75,13 @@ public class VaucherServiceImpl implements IVaucherService {
         return vaucherDtoList;
     }
 
-//    public static void main(String[] args)  {
-//        Human human = null;
-////        Human human = new Human();
-//        Optional<Human> humanOptional = Optional.ofNullable(human);
-//        try {
-//            run(humanOptional);
-//            System.out.println("ttt");
-//        } catch (RuntimeException customEntityNotFoundExc) {
-//            customEntityNotFoundExc.printStackTrace();
-//        }
-//    }
-//
-//    private static void run(Optional<Human> humanOptional)  {
-//        if(humanOptional.isEmpty()){
-//            throw new EntityNotFoundException("message");
-//        }
-//    }
-
     @Override
-    public List<VaucherDto> attachVauchers_toHuman(Long humanId, Long vaucherId) {
+    public List<VaucherDto> attachVauchers_toHuman(Long humanId, Long vaucherId)
+            throws ExcVaucherNotFound {
         Human human = humanRepository.findById(humanId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(ExcVaucherNotFound::new);
         Vaucher vaucher = vaucherRepository.findById(vaucherId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(ExcVaucherNotFound::new);
 
         List<Vaucher> vaucherList = human.getVaucherList();
         vaucherList.add(vaucher);
@@ -114,7 +92,32 @@ public class VaucherServiceImpl implements IVaucherService {
                 v -> vaucherMapper.vaucherToVaucherDto(v)).collect(Collectors.toList());
         return vaucherDtoList;
     }
+
+
+// -------------------------------------------------------TODO
+//
+//    public static void main(String[] args) {
+//        Human human = null;
+//        Human human1 = new Human();
+//
+//        Optional<Human> humanOptional = Optional.ofNullable(human);
+//        try {
+//            run(humanOptional);
+//            System.out.println("ddd");
+//        } catch (CustomEntNotFoundExc customEntNotFoundExc) {
+//            customEntNotFoundExc.printStackTrace();
+//        }
+//    }
+//
+//    private static void run(Optional<Human> humanOptional) throws CustomEntNotFoundExc {
+//        if (humanOptional.isEmpty()) {
+//            throw new CustomEntNotFoundExc("message ---- isEmpty");
+//        }
+//    }
+    //-------------------------------------------------------
+
 }
+
 
 //    TODO      ПРИСВОЕНИЕ  через метод СКЛ запроса - в репозитории ваучера
 //    @Override

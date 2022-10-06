@@ -21,6 +21,8 @@ public interface IHumanRepository extends JpaRepository<Human, Long> {
 
     Optional<Human> findById(Long id);
 
+    Optional<Human> findByMail(String mail);
+
 //    Optional<Human> findById(Long id);
 
 
