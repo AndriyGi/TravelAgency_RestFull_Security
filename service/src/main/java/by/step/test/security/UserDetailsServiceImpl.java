@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         Human human = new Human();
         human = humanRepository.findByMail(mail)
-                .orElseThrow( ()->new ServiceException("user not found by username"));
+                .orElseThrow( ()->new ServiceException("user not found by username(mail) "));
 
         return UserDetailsImpl.build(human);
     }

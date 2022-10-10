@@ -1,14 +1,58 @@
 package by.step.test;
 
 
+import by.step.test.dao.entity.Human;
+import by.step.test.dao.entity.security.JwtResponce;
+import by.step.test.dao.entity.security.LoginRequest;
+import by.step.test.dao.entity.security.SignUpRequest;
+import by.step.test.dto.HumanDto;
+import by.step.test.excemption.ControllerExcemtion;
+import by.step.test.exception.ExcEmptyHumansList;
+import by.step.test.exception.ExcHumanIsPresent;
+import by.step.test.exception.ExcHumanNotFound;
+import by.step.test.service.IAuthService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
 
 @RestController
-@RequestMapping("/---")
-@Tag(name = "--", description = "для АВТОРИЗАЦИИ")
+@RequestMapping("/auth")
+@Tag(name = "ПРОВЕРКА", description = "для АВТОРИЗАЦИИ")
 public class AuthController {
+
+    private final IAuthService authService;
+
+    @Autowired
+    public AuthController(IAuthService authService) {
+        this.authService = authService;
+    }
+
+    @PostMapping("/registr")
+    @Operation(summary = "Зарегестрировать нового Человека", description = "registration")
+    public Human registration(@RequestBody SignUpRequest signUpRequest)
+            throws ExcHumanNotFound, ExcHumanIsPresent {
+        Human human = authService.registration(signUpRequest);
+        return human;
+    }
+
+    @PostMapping("/authenticate")
+    @Operation(summary = "Идентифицировать  Человека", description = "authentication")
+    public JwtResponce authentication(@RequestBody LoginRequest loginRequest) {
+        JwtResponce jwtResponce = authService.authentication(loginRequest);
+        return jwtResponce;
+    }
+//---------------------
+    @GetMapping("/authentificated")
+    public String pageForeAuthentificatedUsers(Principal principal) {
+        IAuthService a = (IAuthService) SecurityContextHolder
+                .getContext().getAuthentication();
+        return "secured part of web service" + principal.getName();
+    }
 
 
 }

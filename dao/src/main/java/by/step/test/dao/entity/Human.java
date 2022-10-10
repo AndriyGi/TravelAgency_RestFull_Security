@@ -1,6 +1,7 @@
 package by.step.test.dao.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Human {
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "link_human_vaucher",
             joinColumns = @JoinColumn(name = "human_id"),
@@ -24,10 +25,14 @@ public class Human {
     )
     private List<Vaucher> vaucherList;
 
-    @ManyToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name = "human_role",  joinColumns = @JoinColumn("human_id")
-            , inverseJoinColumns = @JoinColumn ("role_id"))
-    private  List<Role> roleList;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "human_role",
+            joinColumns = @JoinColumn(name = "human_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"),
+            foreignKey = @ForeignKey(name = "fk_human_to_role")
+    )
+    private List<Role> roleList;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +49,6 @@ public class Human {
 
     private String mail;
     private String pass;
-
-
-
-
-
-
 
 
 //    @JoinTable(

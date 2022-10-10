@@ -16,6 +16,7 @@ import by.step.test.mapper.VaucherMapper;
 import by.step.test.service.IHumanService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class HumanServiceImpl implements IHumanService {
     private HumanMapper humanMapper;
     @Autowired
     private VaucherMapper vaucherMapper;
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
     private Object Comparator;
     private Object Human;
     private Object List;
@@ -51,6 +54,7 @@ public class HumanServiceImpl implements IHumanService {
 
     @Override
     public HumanDto save(Human human) throws ExcHumanIsPresent {
+        human.setPass(bCryptPasswordEncoder.encode(human.getPass()) );
         log.info("SERVICE -- exstracting ALL HUMANs LIST  from REPOSITORY ");
         List<Human> humanList = humanRepository.findAll();
 //        log.info(" checking FOR EMPTY LIST ");

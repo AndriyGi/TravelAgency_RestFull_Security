@@ -32,66 +32,56 @@ public class UserDetailsImpl implements UserDetails {
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
-        UserDetailsImpl userDetails = new UserDetailsImpl(human.getVaucherList(), human.getId(), human.getName()
-                , human.getSurname()
+
+        UserDetailsImpl userDetailsImpl = new UserDetailsImpl(human.getVaucherList()
+                , human.getId(), human.getName(), human.getSurname()
                 , human.getAge(), human.getMail(), human.getPass(), authorityList);
-        return userDetails;
+        return userDetailsImpl;
     }
 
     public List<Vaucher> getVaucherList() {
         return vaucherList;
     }
-
     public Long getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
-
     public String getSurname() {
         return surname;
     }
-
     public Integer getAge() {
         return age;
+    }
+    public String getMail() {
+        return mail;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
-
     @Override
     public String getPassword() {
         return pass;
     }
-
     @Override
     public String getUsername() {
         return mail;
     }
-
-    public String getMail() {
-        return mail;
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
     @Override
     public boolean isEnabled() {
         return true;

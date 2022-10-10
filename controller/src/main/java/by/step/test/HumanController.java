@@ -12,6 +12,7 @@ import by.step.test.service.IVaucherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class HumanController {
 
     @GetMapping("/{humanId}")
     @Operation(summary = "Найти по АйДи", description = "All clients of Agency")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public HumanDto findById(@PathVariable("humanId") Long id) throws ExcHumanNotFound {
         return humanService.findById(id);
     }

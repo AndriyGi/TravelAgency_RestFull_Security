@@ -23,4 +23,5 @@ public class SignUpRequest {
     private String pass;
     private List<String> roleList;
 
+
 }
