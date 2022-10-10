@@ -39,39 +39,48 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
+    protected void doFilterInternal(
+            // - встроились в Цепочку фильтров(-doFilterInternal) для  добавления своего (логики)
+            HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            //-парсируем, спользую метод  -parseJwt
+            //-парсируем(получаем Токен из request) , используюя метод  -parseJwt
             String jwt = parseJwt(request);
             //-проверяем используя наш метод - validateJwtToken(проверка на время) из JwtUtill
             if (jwt != null && jwtUtill.validateJwtToken(jwt)) {
-                //    из jwt - вытягиваем -username(mail)
+                //    из jwt - вытягиваем(ПОЛУЧАЕМ) -username(mail)
                 String username = jwtUtill.getUserNameFromToken(jwt);
-// - создвем(загружаем) объект userDetails (типа-GrantedAuthority)
-//           по найденному -username(кот уже АВТОРИЗОВАН)
+//   ПОЛУЧАЕМ - userDetails  -  по найденному -username(кот. уже АВТОРИЗОВАН)
+// - Достаем(загружаем) готовый объект userDetails (типа-GrantedAuthority)
 //-loadUserByUsername(username) - подтягиваем ВСЕГО (общего) пользователя по его -username(mail)
+                // - userDetails - ОБЫЧНЫЙ пользователь
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                // - создает объект типа -GrantedAuthority(общий интерфейс)
+// - создаем ОБЪЕКТ АУТЕНТИФИКАЦИИ с его ролями и всем остальным (типа -GrantedAuthority(общий интерфейс))
                 //-сюда закидываем только его(userDetails) - ДОСТУП
-    //-создаем его ДАННЫЕ, кот. будем закидывать в SecurityContextHolder(метод(-сто) доступа),
-                // чтобы потом по этим своим доступам он мог обращаться к разным методам
+//-создаем его ДАННЫЕ(в сгенеренный ранее(в JwtUtills)- ТОКЕН-?),
+// кот. будем закидывать в SecurityContextHolder(метод доступа),
+                // чтобы потом по этим своим Authority он мог обращаться к разным методам
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                         = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
 
+//- создаем(? СЭТАЕМ) объект (Аутентификации) из -request - все данные в нем
+//    (responce - здесь приходит пустым, его потом будем отправлять)
                 usernamePasswordAuthenticationToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request));
+
+// и кладем в SecurityContextHolder, который использ-ся в методе -authentication в IAuthServiceImpl
                 SecurityContextHolder.getContext()
                         .setAuthentication(usernamePasswordAuthenticationToken);
             }
         } catch (Exception e) {
-            log.error("ERROR in Security FILTER ");
+            log.error("--- ERROR in Security FILTER --");
             e.printStackTrace();
         }
+        // - продлеваем Цепочку фильтров дальше, для -продолжения фильтрования по дефолту
         filterChain.doFilter(request, response);
 
     }
