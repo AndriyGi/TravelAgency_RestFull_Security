@@ -54,10 +54,13 @@ public class HumanServiceImpl implements IHumanService {
 
     @Override
     public HumanDto save(Human human) throws ExcHumanIsPresent {
+        // - TODO -  ???  ОТКУДА БЕРЕТСЯ ПАРОЛЬ ЗДЕСЬЬ ?
+        // - пароль здесь приходит (в Хумане) ИЗ ФРОНТА
         human.setPass(bCryptPasswordEncoder.encode(human.getPass()) );
+
         log.info("SERVICE -- exstracting ALL HUMANs LIST  from REPOSITORY ");
         List<Human> humanList = humanRepository.findAll();
-//        log.info(" checking FOR EMPTY LIST ");
+//        log.info(" checking IF LIST  is  EMPTY  ");
 //        if (humanList.isEmpty()) {
 //            log.info(" IF Its empty list - THROW EXC-on  ");
 //            throw new ExcEmptyHumansList("Its empty list");
@@ -72,7 +75,7 @@ public class HumanServiceImpl implements IHumanService {
         if (result) {
             throw new ExcHumanIsPresent(" Human IS- HEAR - in OUR DB  !!!");
         }
-        log.info("SERVICE -- HUMANDTO MAPPING ------");
+        log.info("SERVICE -- HUMAND  TO MAPPING ------");
         HumanDto humanDto = humanMapper.humanToHumanDto(humanRepository.save(human));
         log.info(" SERVICE  -  new  Human was SAVED in DB !!!");
         return humanDto;
@@ -80,7 +83,7 @@ public class HumanServiceImpl implements IHumanService {
 
     @Override
     public HumanDto findById(Long id) throws ExcHumanNotFound {
-        log.info("TRY to find Human(OPTIONAL");
+        log.info("TRY to find Human('OPTIONAL");
         Optional<Human> humanOpt = humanRepository.findById(id);
         log.info("CHECKING if Human is present ??  ");
         if (humanOpt.isPresent()) {

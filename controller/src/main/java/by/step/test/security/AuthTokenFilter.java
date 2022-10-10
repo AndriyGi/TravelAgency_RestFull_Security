@@ -40,6 +40,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
+            // - МЕТОД - ФИЛЬТРУЕТ по Токену, валиден-ли он?
             // - встроились в Цепочку фильтров(-doFilterInternal) для  добавления своего (логики)
             HttpServletRequest request,
                                     HttpServletResponse response,
