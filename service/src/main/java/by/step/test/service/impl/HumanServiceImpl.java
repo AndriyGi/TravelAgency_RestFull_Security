@@ -55,7 +55,7 @@ public class HumanServiceImpl implements IHumanService {
     @Override
     public HumanDto save(Human human) throws ExcHumanIsPresent {
         // - TODO -  ???  ОТКУДА БЕРЕТСЯ ПАРОЛЬ ЗДЕСЬЬ ?
-        // - пароль здесь приходит (в Хумане) ИЗ ФРОНТА
+        // - пароль здесь приходит (в Хумане) ИЗ ФРОНТА - и здесь зашифр-ся
         human.setPass(bCryptPasswordEncoder.encode(human.getPass()) );
 
         log.info("SERVICE -- exstracting ALL HUMANs LIST  from REPOSITORY ");
