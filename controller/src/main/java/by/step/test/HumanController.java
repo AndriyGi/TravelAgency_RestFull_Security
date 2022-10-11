@@ -44,6 +44,7 @@ public class HumanController {
     }
 
     @GetMapping("find_all")
+    @PreAuthorize("hasAnyRole('ADMIN','USER','GUEST')")
     @Operation(summary = "Найти всех людей", description = "All clients of Agency")
     public List<HumanDto> findAll() throws ExcEmptyHumansList, ControllerExcemtion {
         try{
@@ -57,7 +58,7 @@ public class HumanController {
 
     @GetMapping("/{humanId}")
     @Operation(summary = "Найти по АйДи", description = "All clients of Agency")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER','GUEST')")
     public HumanDto findById(@PathVariable("humanId") Long id) throws ExcHumanNotFound {
         return humanService.findById(id);
     }
