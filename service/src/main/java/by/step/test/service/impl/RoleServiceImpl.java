@@ -3,9 +3,7 @@ package by.step.test.service.impl;
 import by.step.test.dao.entity.Role;
 import by.step.test.dao.repository.IRoleRepository;
 import by.step.test.service.IRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityNotFoundException;
 
 @Service

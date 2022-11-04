@@ -1,0 +1,86 @@
+databaseChangeLog:
+  - changeSet:
+      id: v_1_add_content
+      author: aga
+      changes:
+        - createTable:
+            tableName: human
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: age
+                  type: int
+              - column:
+                  name: mail
+                  type: varchar(255)
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: pass
+                  type: varchar(255)
+              - column:
+                  name: surname
+                  type: varchar(255)
+        - createTable:
+            tableName: human_role
+            columns:
+              - column:
+                  name: human_id
+                  type: bigint
+              - column:
+                  name: role_id
+                  type: bigint
+        - createTable:
+            tableName: link_human_vaucher
+            columns:
+              - column:
+                  name: vaucher_id
+                  type: bigint
+              - column:
+                  name: human_id
+                  type: bigint
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+        - createTable:
+            tableName: vaucher
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: days
+                  type: int
+              - column:
+                  name: priceoneday
+                  type: double
+              - column:
+                  name: vfullprice
+                  type: double
+              - column:
+                  name: vaucher_type
+                  type: varchar(255)
+
+
+

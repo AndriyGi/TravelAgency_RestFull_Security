@@ -69,8 +69,6 @@ public class HumanController {
         return id;
     }
 
-
-
     @GetMapping("/findallhumansbyvaucherid/{vaucherid}")
     @Operation(summary = "Найти ВСЕХ ЛЮДЕЙ по АйДи путевки"
             , description = "Найти ВСЕХ Л по АйДи П")
@@ -78,24 +76,5 @@ public class HumanController {
             throws ExcVaucherNotFound {
         return humanService.findAllHumansByVaucher_Id(vaucherId);
     }
-
-//    @GetMapping("/findhumanbyvaucherid/{vaucherid}")
-//    @Operation(summary = "Найти человека по путевке ID"
-//            , description = "Найти человека по путевке ID")
-//    public HumanDto findHumanByVaucher_Id(@PathVariable("vaucherid") Long vaucherId){
-//        return humanService.findHumanByVaucherId(vaucherId);
-//    }
-
-
-//    @GetMapping("/filter")
-//    public List<Human> findAllByName(@RequestParam("name") String name) {
-//        return humanService.findAllByName(name);
-//    }
-
-//    @GetMapping("/surnameage")
-//    @Operation(summary = "пнайти по имени и возрасту", description = "ВСЕ по возрасту и фамилии")
-//    public List<Human> findAllBySurnameAndAge(@RequestParam String surname, @RequestParam Integer age) {
-//        return humanService.findAllBySurnameAndAge(surname, age);
-//    }
 
 }

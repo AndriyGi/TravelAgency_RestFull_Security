@@ -23,8 +23,8 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-//    @ManyToMany
-//    @JoinColumn(name = "human_id")
-//    private List<Human> humanList;
+    @ManyToMany
+    @JoinColumn(name = "human_id")
+    private List<Human> humanList;
 
 }

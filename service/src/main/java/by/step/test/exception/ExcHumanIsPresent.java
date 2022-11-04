@@ -16,7 +16,6 @@ public class ExcHumanIsPresent extends Exception {
         super(message, cause);
     }
 
-
     public ExcHumanIsPresent(String message, Human human) {
     }
 }

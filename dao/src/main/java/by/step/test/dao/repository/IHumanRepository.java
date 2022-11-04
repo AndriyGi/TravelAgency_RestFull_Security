@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface IHumanRepository extends JpaRepository<Human, Long> {
 
 
-//    @Query(value = "SELECT '*' FROM human", nativeQuery = true)
+   // @Query(value = "SELECT '*' FROM human", nativeQuery = true)
     List<Human> findAll();
 
     Human save(Human human);
@@ -23,17 +23,4 @@ public interface IHumanRepository extends JpaRepository<Human, Long> {
 
     Optional<Human> findByMail(String mail);
 
-//    Optional<Human> findById(Long id);
-
-
-//    @Query(value = "UPDATE vaucher " +
-//            "set human_id=:humanId " +
-//            "where id = :vaucherId"
-//            , nativeQuery = true)
-//    Human attachVauchers_toHuman(@Param("humanId") Long humanId
-//            , @Param("vaucherId") Long vaucherId);
-
-
-//    List<Human> findAllByName(String name);
-//    List<Human> findAllBySurnameAndAge(String surname, Integer age);
 }

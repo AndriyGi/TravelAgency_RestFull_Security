@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/v_1_add_content.yaml
+  - include:
+      file: db/changelog/changeset/v_2_add_constraint_keys.yaml
+  - include:
+      file: db/changelog/changeset/V_3_add_keys_role.yaml
+  - include:
+      file: db/changelog/changeset/v_4_add_data.yaml
+  - include:
+      file: db/changelog/changeset/v_5_update_human.yaml

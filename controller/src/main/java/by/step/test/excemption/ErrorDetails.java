@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 
-
 @Data
 @Builder
 @NoArgsConstructor

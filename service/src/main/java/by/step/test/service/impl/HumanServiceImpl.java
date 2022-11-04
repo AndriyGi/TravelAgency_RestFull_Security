@@ -1,18 +1,15 @@
 package by.step.test.service.impl;
 
-import by.step.test.converterdto.HumanConverter;
 import by.step.test.dao.entity.Human;
 import by.step.test.dao.entity.Vaucher;
 import by.step.test.dao.repository.IHumanRepository;
 import by.step.test.dao.repository.IVaucherRepository;
 import by.step.test.dto.HumanDto;
-//import by.step.test.exception.EntityNotFoundException;
 import by.step.test.exception.ExcEmptyHumansList;
 import by.step.test.exception.ExcHumanIsPresent;
-import by.step.test.exception.ExcVaucherNotFound;
 import by.step.test.exception.ExcHumanNotFound;
+import by.step.test.exception.ExcVaucherNotFound;
 import by.step.test.mapper.HumanMapper;
-import by.step.test.mapper.VaucherMapper;
 import by.step.test.service.IHumanService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +17,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+//import by.step.test.exception.EntityNotFoundException;
+
 @Service
 @Slf4j
 public class HumanServiceImpl implements IHumanService {
-    @Autowired
-    private HumanConverter humanConverter;
     @Autowired
     private IHumanRepository humanRepository;
     @Autowired
@@ -37,13 +33,10 @@ public class HumanServiceImpl implements IHumanService {
     @Autowired
     private HumanMapper humanMapper;
     @Autowired
-    private VaucherMapper vaucherMapper;
-    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
     private Object Comparator;
     private Object Human;
     private Object List;
-
 
 
     @Override
@@ -54,17 +47,10 @@ public class HumanServiceImpl implements IHumanService {
 
     @Override
     public HumanDto save(Human human) throws ExcHumanIsPresent {
-        // - TODO -  ???  ОТКУДА БЕРЕТСЯ ПАРОЛЬ ЗДЕСЬЬ ?
-        // - пароль здесь приходит (в Хумане) ИЗ ФРОНТА - и здесь зашифр-ся
-        human.setPass(bCryptPasswordEncoder.encode(human.getPass()) );
 
+        human.setPass(bCryptPasswordEncoder.encode(human.getPass()) );
         log.info("SERVICE -- exstracting ALL HUMANs LIST  from REPOSITORY ");
         List<Human> humanList = humanRepository.findAll();
-//        log.info(" checking IF LIST  is  EMPTY  ");
-//        if (humanList.isEmpty()) {
-//            log.info(" IF Its empty list - THROW EXC-on  ");
-//            throw new ExcEmptyHumansList("Its empty list");
-//        }
         log.info(" SERVICE - Проверка на наличие такого Хуман в БД ");
         boolean result = humanList.stream()
                 .anyMatch(human1 ->
@@ -134,42 +120,6 @@ public class HumanServiceImpl implements IHumanService {
             throw new ExcVaucherNotFound("Vaucher not found by ID");
         }
     }
-
 }
 
-//    @Override
-//    public HumanDto findHumanByVaucherId(Long id) {
-//        Vaucher vaucher = vaucherRepository.findById(id)
-//                .orElseThrow(EntityNotFoundException::new);
-//        return humanMapper.humanToHumanDto(vaucher.getHuman());
-//    }
-
-
-//    @Override
-//    public HumanDto attachVauchers_toHuman(Long humanId, Long vaucherId) {
-//        Human human = humanRepository.attachVauchers_toHuman(humanId, vaucherId);
-//        HumanDto humanDto = humanConverter.fromHumanToHumanDto(human);
-//        return humanDto;
-//    }
-
-//    @Override
-//    public Human attachVaucherToHuman(Long humanId, Long vaucherId) {
-//        Human human = humanRepository.findById(humanId)
-//                .orElseThrow(EntityNotFoundException::new);
-//        Vaucher vaucher = vaucherRepository.findById(vaucherId)
-//                .orElseThrow(EntityNotFoundException::new);
-//        human.setVaucher(vaucher);
-//        return human;
-//    }
-
-
-//    public List<Human> findAllByName(String name) {
-//        List<Human> allHumansByName = humanRepository.findAllByName(name);
-//        return allHumansByName;
-//    }
-
-//    @Override
-//    public List<Human> findAllBySurnameAndAge(String surname, Integer age) {
-//        return humanRepository.findAllBySurnameAndAge(surname, age);
-//    }
 

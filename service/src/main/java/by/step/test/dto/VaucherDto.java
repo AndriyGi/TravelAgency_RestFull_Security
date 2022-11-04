@@ -1,12 +1,10 @@
 package by.step.test.dto;
 
 import by.step.test.dao.entity.VaucherType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-
 
 
 @NoArgsConstructor
@@ -30,8 +28,4 @@ public class VaucherDto {
                 this.vaucherType = vaucherType;
         }
 
-        //
-//        public VaucherDto(Long id, Double priceOneDay, Integer days
-//                , Double vaucherFullPrice) {
-//        }
 }

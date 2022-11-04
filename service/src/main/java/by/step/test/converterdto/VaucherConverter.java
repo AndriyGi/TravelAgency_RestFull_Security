@@ -1,8 +1,6 @@
 package by.step.test.converterdto;
 
-import by.step.test.dao.entity.Human;
 import by.step.test.dao.entity.Vaucher;
-import by.step.test.dto.HumanDto;
 import by.step.test.dto.VaucherDto;
 import org.springframework.stereotype.Component;
 

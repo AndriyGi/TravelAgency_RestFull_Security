@@ -1,12 +1,9 @@
 package by.step.test.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 
 @NoArgsConstructor
@@ -14,7 +11,6 @@ import java.util.List;
 @Setter
 @Component
 public class HumanDto {
-
 
     private Long id;
     private String name;

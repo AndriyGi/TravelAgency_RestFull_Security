@@ -8,10 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
-
 //    @Bean
-//    IHumanRepository humanRepository (){ return new HumanRepositoryImpl();
+//    IHumanRepository humanRepository (){
+//    return new HumanRepositoryImpl();
 //    }
-
-
 }

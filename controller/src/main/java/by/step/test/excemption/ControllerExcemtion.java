@@ -1,6 +1,6 @@
 package by.step.test.excemption;
 
-public class ControllerExcemtion extends Exception{
+public class ControllerExcemtion extends Exception {
 
     public ControllerExcemtion() {
     }
@@ -16,6 +16,5 @@ public class ControllerExcemtion extends Exception{
     public ControllerExcemtion(Throwable cause) {
         super(cause);
     }
-
 
 }

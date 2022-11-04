@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//@Slf4j
+@Slf4j
 public class IAuthServiceImpl implements IAuthService {
 
     private final JwtUtill jwtUtill;
@@ -55,7 +55,6 @@ public class IAuthServiceImpl implements IAuthService {
             List<Role> roleList = new ArrayList<>();
             if (signUpListRoles == null) {
                 String roleName = ERole.ROLE_GUEST.name();
-//                String roleName = "ROLE_GUEST";     //  -- same
                 Role role = roleService.findByName(roleName);
                 roleList.add(role);
                 //todo create Service & Repository for Roles Entities
@@ -65,19 +64,16 @@ public class IAuthServiceImpl implements IAuthService {
                     switch (r) {
                         case "ADMIN":
                             String adminName = ERole.ROLE_ADMIN.name();
-//                          String roleName = "ROLE_ADMIN";     //  -- same
                             Role roleAdmin = roleService.findByName(adminName);
                             roleList.add(roleAdmin);
                             break;
                         case "USER":
                             String userName = ERole.ROLE_USER.name();
-//                          String roleName = "ROLE_USER";     //  -- same
                             Role roleUser = roleService.findByName(userName);
                             roleList.add(roleUser);
                             break;
                         default:
                             String userGuest = ERole.ROLE_GUEST.name();
-//                           String roleName = "ROLE_GUEST";     //  -- same
                             Role roleGuest = roleService.findByName(userGuest);
                             roleList.add(roleGuest);
                     }
@@ -88,11 +84,8 @@ public class IAuthServiceImpl implements IAuthService {
             return human;
         }
 
-        throw new ExcHumanIsPresent(" no MAIL  input " +
-
-                "?????????????????" +
-
-                "OR Human is  ALEADY  exist ! ");
+        throw new ExcHumanIsPresent(" no MAIL  input ?" +
+                " OR - Human is  ALEADY  exist ! ");
     }
 
     @Override

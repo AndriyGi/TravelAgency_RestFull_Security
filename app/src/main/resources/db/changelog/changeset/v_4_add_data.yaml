@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: v_3_add_keys
+      author: aga
+      changes:
+        - insert:
+            tableName: human
+            columns:
+              - column:
+                  name: age
+                  value: 33
+              - column:
+                  name: mail
+                  value: wo@mmail.ru
+              - column:
+                  name: name
+                  value: Ivan
+              - column:
+                  name: pass
+                  value: 1234
+              - column:
+                  name: surname
+                  value: Ivanov
+

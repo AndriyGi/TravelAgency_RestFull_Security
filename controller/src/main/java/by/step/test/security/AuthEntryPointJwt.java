@@ -41,14 +41,17 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 //-то-же что и выше только из Хендлера - но туда запрос еще НЕ ПОПАЛ    ???
 // - здесь мы НЕМОЖЕМ НИЧЕГО вернуть в -errorDetails
         errorDetails.setDetails("Пройдите аутентиф-ю"); // - Сэт - возвращает ВОИД-ничего, сэтает
-//        ErrorDetails.builder()...  -  можно использовать Билдер(через класс. тк это СТАТИЧЕСКИЙ метод(паттерн))
+//        ErrorDetails.builder()...  -  можно использовать Билдер(через класс.
+//        тк это СТАТИЧЕСКИЙ метод(паттерн))
 //        - Билдер возвращает - ЭТОТ-ЖЕ объект
 
 //  -ObjectMapper - это класс в пакете jackson-databind,
-//   который предоставляет функцию чтения и записи JSON, который может легко преобразовывать ОБЪЕКТЫ(POJO) в JSON:
+//   который предоставляет функцию чтения и записи JSON,
+//   который может легко преобразовывать ОБЪЕКТЫ(POJO) в JSON:
         // - ЗДЕСЬ он запишет -errorDetails  -В-  -response - это уйдет в ЭррорРеспонс
         // - response - объект (улетает на ФРОНТ как объект)
-        // - НАШ -errorDetails.setDetails("Пройдите аутентиф-ю") - добавляется в ОБЩИЙ (HttpServletResponse response) -> на ФРОНТ
+        // - НАШ -errorDetails.setDetails("Пройдите аутентиф-ю")
+        // - добавляется в ОБЩИЙ (HttpServletResponse response) -> на ФРОНТ
         // - выводиться будет в  -getOutputStream()
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(response.getOutputStream(), errorDetails);

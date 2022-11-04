@@ -73,7 +73,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 usernamePasswordAuthenticationToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request));
 
-// и кладем в SecurityContextHolder, который использ-ся в методе -authentication в IAuthServiceImpl
+// и кладем в SecurityContextHolder,
+// который использ-ся в методе -authentication в IAuthServiceImpl
                 SecurityContextHolder.getContext()
                         .setAuthentication(usernamePasswordAuthenticationToken);
             }
@@ -86,7 +87,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     }
 
-    //  - метод ля парсинга
+    //  - метод для парсинга
     // - private - тк будем его вызывать только из метода здесь - doFilterInternal
     // - HttpServletRequest -запрос - то что приходит с ФРОНТа(с Свагера, Постмана...)
     // - парсить - убирать Header в начале (заголовок над Характеристиками ЗАПРОСА)

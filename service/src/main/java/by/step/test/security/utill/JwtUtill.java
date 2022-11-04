@@ -15,6 +15,7 @@ public class JwtUtill {
     @Value("${jwt.token.time}")
     private int time;
 
+
    public String generateJwtToken(Authentication authentication){
 
        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -26,8 +27,6 @@ public class JwtUtill {
 
    public boolean validateJwtToken(String jwt){
        try {
-           // - проверка по ключу - word
-           // - здесь просто РАСПАРСИЛИ для проверки(валидации)(как цифровую подрись проверяем)
            Jwts.parser().setSigningKey(word).parseClaimsJws(jwt);
            return true;
        } catch (ExpiredJwtException
@@ -39,10 +38,10 @@ public class JwtUtill {
        }
        return false;
    }
-   // - сюда приходит Токен - jwt
+
    public  String getUserNameFromToken(String jwt){
        return Jwts.parser().setSigningKey(word).parseClaimsJws(jwt)
-               .getBody().getSubject();   // -  вернет -  username
+               .getBody().getSubject();
    }
 
 }

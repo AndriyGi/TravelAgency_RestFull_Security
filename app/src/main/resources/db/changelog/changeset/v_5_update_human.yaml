@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: v_5_update_human
+      author: aga
+      changes:
+        - update:
+            tableName: human
+            columns:
+              - column:
+                  name: age
+                  value: 22

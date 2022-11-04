@@ -5,7 +5,6 @@ import by.step.test.dto.HumanDto;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-
 import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 
 

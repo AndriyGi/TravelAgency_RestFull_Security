@@ -2,7 +2,6 @@ package by.step.test.security;
 
 import by.step.test.dao.entity.Human;
 import by.step.test.dao.repository.IHumanRepository;
-import by.step.test.exception.ExcHumanNotFound;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

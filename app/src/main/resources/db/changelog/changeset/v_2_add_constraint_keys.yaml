@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: v_2_add_keys
+      author: aga
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: human_role
+            baseColumnNames: human_id
+            referencedTableName: human
+            referencedColumnNames: id
+            constraintName: fk_human_role_human_id_human_id

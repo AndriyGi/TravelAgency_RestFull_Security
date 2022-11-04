@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "vaucher")
@@ -25,7 +24,6 @@ public class Vaucher {
             foreignKey = @ForeignKey(name = "fk_vaucher_to_human")
     )
     private List<Human> humanList;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,24 +43,5 @@ public class Vaucher {
 
     @ManyToMany(mappedBy = "vaucherList")
     private List<Human> human = new ArrayList<>();
-
-
-    //=================================================
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "human_id")
-//    private Human human;
-
-////-----------------------------------------------
-//    @OneToMany(mappedBy = "vaucher", cascade = CascadeType.REFRESH)
-//    private List<Human> humanList;
-//_________________________________________
-//    @OneToMany(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "vaucher_id")
-//    private List<Human> humanList;
-// ------------------------------------------
-//        @JoinColumn
-//    @OneToOne(cascade =  CascadeType.ALL)
-//    private  Human human;
-//
 
 }
