@@ -9,6 +9,7 @@ add humans and vauchers to the database; remove humans and vauchers from the dat
 
 -Database migration implemented using the The Liquibase framework 
 for managing automatic code delivery to  test and live environment, using dialect YAML.
+
 -Spring Security Authentication Using Token implemented.
 
 # Launch
