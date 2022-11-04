@@ -7,6 +7,10 @@ The "TravelAgency" application allows to:
 
 add humans and vauchers to the database; remove humans and vauchers from the database; make search of data using particular parameters (type of vauchers, name for humans etc) ; attach vauchers to humans; count total cost of the vauchers.
 
+-Database migration implemented using the The Liquibase framework 
+for managing automatic code delivery to  test and live environment, using dialect YAML.
+-Spring Security Authentication Using Token implemented.
+
 Launch
 Before launch, make sure that your device support MySQL. Install software for database developing and administrating if necessary (PHP Adminer, Postgres, Workbench etc).
 
