@@ -6,16 +6,18 @@ The application use MySQL: 8.0.29.
 # About
 The "TravelAgency" application allows to:
 
-add humans and vouchers to the database; remove humans and vouchers from the database; make search of data using particular parameters (type of vouchers, name for humans etc.) ; attach vouchers to humans; count total cost of the vouchers.
+Add humans and vouchers to the database; 
+remove humans and vouchers from the database; 
+make search of data using particular parameters (type of vouchers, name for humans etc.) ; 
+attach vouchers to humans; 
+count total cost of the vouchers.
 
--Exception handling to maintain the normal flow of the application implemented.
 
-- Simple Logging Facade for Java (SLF4J) implemented as a facade for different logging frameworks 
-   (e.g.,  java.util.logging, logback, Log4j).
-   
--Database migration implemented using the “Liquibase” framework 
-  for managing automatic code delivery to test and live environment, using dialect YAML.
-  
+-Exception handling to maintain the normal flow of the application implemented,
+-Simple Logging Facade for Java (SLF4J) implemented as a facade for different logging frameworks 
+   (e.g.,  java.util.logging, logback, Log4j),   
+-Database migration implemented using the “Liquibase” framework integrated with Maven, 
+  for managing automatic code delivery to test and live environment, using dialect YAML,  
 -Token-based API authentication with Spring and JWT implemented.
 
 
@@ -39,3 +41,11 @@ open your browser and enter localhost:8070/swagger-ui/index.html    in the addre
 Or go to link: http://localhost:8070/swagger-ui/index.html
 
 # Edit configurations in your IDE if necessary.
+
+#Powered By :
+Thanks to B. Vesarab for his advice on SpringLiquibase.
+This app is proudly powered with:
+•	love
+•	Spring Boot
+•	Spring JDBC
+
