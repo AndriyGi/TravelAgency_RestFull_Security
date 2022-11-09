@@ -15,9 +15,9 @@ count total cost of the vouchers.
 
 -Exception handling to maintain the normal flow of the application implemented,
 -Simple Logging Facade for Java (SLF4J) implemented as a facade for different logging frameworks 
-   (e.g.,  java.util.logging, logback, Log4j),   
+   (e.g.,  java.util.logging, logback, Log4j) implemented,   
 -Database migration implemented using the “Liquibase” framework integrated with Maven, 
-  for managing automatic code delivery to test and live environment, using dialect YAML,  
+  for managing automatic code delivery to test and live environment, using dialect YAML implemented, 
 -Token-based API authentication with Spring and JWT implemented.
 
 
