@@ -40,9 +40,9 @@ open your browser and enter localhost:8070/swagger-ui/index.html    in the addre
 
 Or go to link: http://localhost:8070/swagger-ui/index.html
 
-# Edit configurations in your IDE if necessary.
+Edit configurations in your IDE if necessary.
 
-#Powered By :
+# Powered By :
 Thanks to B. Vesarab for his advice on SpringLiquibase.
 This app is proudly powered with:
 •	love
